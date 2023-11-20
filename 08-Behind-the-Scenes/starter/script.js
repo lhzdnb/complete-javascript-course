@@ -34,40 +34,75 @@
 //
 
 // Variables
-console.log(me);
+// console.log(me);
 // console.log(job);
 // console.log(year);
 
-var me = "LH";
-let job = "student";
-const year = 2002;
+// var me = "LH";
+// let job = "student";
+// const year = 2002;
+//
+// // Function
+// console.log(typeof addExpr);
+//
+// function addDecl(a, b) {
+//   return a + b;
+// }
+//
+// var addExpr = function (a, b) {
+//   return a + b;
+// };
+//
+// const addArrow = (a, b) => {
+//   return a + b;
+// };
+//
+// // Example
+// if (!numProducts) deleteShoppingCart();
+//
+// var numProducts = 10;
+//
+// function deleteShoppingCart() {
+//   console.log("All products deleted");
+// }
+//
+// var x = 1;
+// let y = 2;
+// const z = 3;
+// console.log(x === window.x);
+// console.log(y === window.y);
 
-// Function
-console.log(typeof addExpr);
+console.log(this);
 
-function addDecl(a, b) {
-  return a + b;
+function calcAge(birthYear) {
+  console.log(2037 - birthYear);
+  console.log(this);
 }
 
-var addExpr = function (a, b) {
-  return a + b;
+calcAge(1991);
+
+const calcAgeArrow = birthYear => {
+  console.log(2037 - birthYear);
+  console.log(this);
 };
 
-const addArrow = (a, b) => {
-  return a + b;
+calcAgeArrow(1991);
+
+const jonas = {
+  year: 1991,
+  calcAge() {
+    console.log(this);
+    console.log(2037 - this.year);
+  },
 };
+jonas.calcAge();
 
-// Example
-if (!numProducts) deleteShoppingCart();
+const matilda = {
+  year: 2017,
+};
+matilda.calcAge = jonas.calcAge;
+matilda.calcAge();
 
-var numProducts = 10;
-
-function deleteShoppingCart() {
-  console.log("All products deleted");
-}
-
-var x = 1;
-let y = 2;
-const z = 3;
-console.log(x === window.x);
-console.log(y === window.y);
+const f = jonas.calcAge;
+f.year = 2002;
+f();
