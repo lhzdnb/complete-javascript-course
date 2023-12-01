@@ -49,6 +49,112 @@ const restaurant = {
   },
 };
 
+// Split and join
+console.log("a+very+nice+string".split("+"));
+console.log("Hao Liang".split(" "));
+const [firstName, lastName] = "Hao Liang".split(" ");
+console.log(firstName, lastName);
+
+const newName = ["Mr.", firstName, lastName.toUpperCase()].join(" ");
+console.log(newName);
+
+function capitalizeName(name) {
+  const names = name.split(" ");
+  const namesUpper = [];
+  for (const n of names) {
+    // namesUpper.push();
+    namesUpper.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+  console.log(namesUpper.join(" "));
+}
+
+capitalizeName("jessica ann smith davis");
+capitalizeName("hao liang");
+
+// Padding
+const message = "Go to gate 23!";
+console.log(message.padStart(20, "+").padEnd(30, "+"));
+console.log("Hao".padStart(20, "+").padEnd(30, "+"));
+
+const maskCreditCard = function (number) {
+  const str = number.toString();
+  console.log(str.slice(-4).padStart(str.length, "*"));
+};
+maskCreditCard(34343);
+maskCreditCard(3543453543543);
+maskCreditCard("123213213432324324");
+
+// Repeat
+const message2 = "Bad weather.. ALl Departures Delayed... ";
+console.log(message2.repeat(5));
+
+function planesInLine(n) {
+  console.log(`There are ${n} planes in line.\n`.repeat(n));
+}
+
+planesInLine(5);
+
+/*
+ //////////////////////////////////////////////
+ // Working with Strings - Part 2
+ const airline = "TAP Air Portugal";
+ console.log(airline.toLowerCase());
+ console.log(airline.toUpperCase());
+ 
+ // Fix capitalization in name
+ const passenger = "lHzDnB"; // "Lhzdnb"
+ 
+ const passengerLower = passenger.toLowerCase();
+ const passengerCorrect =
+ passengerLower[0].toUpperCase() + passengerLower.slice(1);
+ console.log(passengerCorrect);
+ 
+ // Comparing Emails
+ const email = "hello@lhzdnb.io";
+ const loginEmail = "Hello@lhzdnb.Io \n";
+ 
+ // const lowerEmail = loginEmail.toLowerCase();
+ // const trimmedEmail = lowerEmail.trim();
+ // console.log(trimmedEmail);
+ 
+ const normalizedEmail = loginEmail.toLowerCase().trim();
+ console.log(normalizedEmail);
+ 
+ console.log(email === normalizedEmail);
+ 
+ // replacing
+ const priceCN = "288,97￥";
+ const priceUS = priceCN.replace("￥", "$").replace(",", ".");
+ console.log(priceUS);
+ 
+ const annoucement =
+ "All passengers come to boarding door 23. Boarding door 23!";
+ console.log(annoucement.replace("door", "gate"));
+ console.log(annoucement.replaceAll("door", "gate"));
+ 
+ // Booleans
+ const plane = "Airbus A320neo";
+ console.log(plane.includes("A320"));
+ console.log(plane.startsWith("Airb"));
+ 
+ if (plane.startsWith("Airbus") && plane.endsWith("neo")) {
+ console.log("Part of the NEW Airbus family.");
+ }
+ 
+ // Practice exercise
+ const checkBaggage = function (items) {
+ const baggage = items.toLowerCase();
+ if (baggage.includes("knife") || baggage.includes("gun")) {
+ console.log("You are not allowed on board!");
+ } else {
+ console.log("Welcome aboard!");
+ }
+ };
+ 
+ checkBaggage("I have a laptop, some Food and a packet knife");
+ checkBaggage("Socks and camera");
+ checkBaggage("Got some snacks and a gun for protection"); */
+
 /*
  //////////////////////////////////
  // Working with Strings - Part 1
