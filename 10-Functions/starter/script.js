@@ -1,6 +1,8 @@
 "use strict";
 
 /*
+ //////////////////////////////////////////
+ // Default parameters
  const bookings = [];
  const createBooking = function (
  flightNum,
@@ -28,33 +30,81 @@
  createBooking("LH123", undefined, 1000);
  */
 
-const flight = "LH234";
-const lhzdnb = {
-  name: "Hao Liang",
-  passport: 123345678,
-};
+/*
+ ////////////////////////////////////////////////
+ // How Passing Arguments Works: Values vs. Reference
+ const flight = "LH234";
+ const lhzdnb = {
+ name: "Hao Liang",
+ passport: 123345678,
+ };
+ 
+ function checkIn(flightNum, passenger) {
+ flightNum = "lH999";
+ // Reference!!! It is the same memory in the heap
+ passenger.name = "MR. " + passenger.name;
+ 
+ if (passenger.passport === 123345678) {
+ alert("Check in");
+ } else {
+ alert("Wrong passport");
+ }
+ }
+ 
+ checkIn(flight, lhzdnb);
+ console.log(flight);
+ console.log(lhzdnb);
+ 
+ function newPassport(person) {
+ person.passport = Math.trunc(Math.random() * 1000000);
+ }
+ 
+ newPassport(lhzdnb);
+ checkIn(flight, lhzdnb);
+ console.log(flight);
+ console.log(lhzdnb); */
 
-function checkIn(flightNum, passenger) {
-  flightNum = "lH999";
-  // Reference!!! It is the same memory in the heap
-  passenger.name = "MR. " + passenger.name;
+/*
+ //////////////////////////////////////
+ // Functions accepting callback functions
+ 
+ function oneWord(str) {
+ return str.replaceAll(" ", "").toLowerCase();
+ }
+ 
+ function upperFirstWord(str) {
+ const [firstWord, ...others] = str.split(" ");
+ return [firstWord.toUpperCase(), ...others].join(" ");
+ }
+ 
+ // Higher-order function
+ function transformer(str, func) {
+ console.log(`Original string: ${str}`);
+ console.log(`Transformed string: ${func(str)}`);
+ console.log(`Transformed by: ${func.name}`);
+ }
+ 
+ transformer("JavaScript is the best!", upperFirstWord);
+ transformer("JavaScript is the best!", oneWord);
+ 
+ const high5 = function () {
+ console.log("👋");
+ };
+ 
+ document.body.addEventListener("click", high5);
+ 
+ ["Jonas", "Martha", "Adam"].forEach(high5); */
 
-  if (passenger.passport === 123345678) {
-    alert("Check in");
-  } else {
-    alert("Wrong passport");
-  }
-}
+// const greet = function (greeting) {
+//   return function (name) {
+//     console.log(`${greeting} ${name}`);
+//   };
+// };
 
-checkIn(flight, lhzdnb);
-console.log(flight);
-console.log(lhzdnb);
+const greet = greeting => name => console.log(`${greeting} ${name}`);
 
-function newPassport(person) {
-  person.passport = Math.trunc(Math.random() * 1000000);
-}
+const greeterHey = greet("Hey");
+greeterHey("Hao");
+greeterHey("Liang");
 
-newPassport(lhzdnb);
-checkIn(flight, lhzdnb);
-console.log(flight);
-console.log(lhzdnb);
+greet("Hello")("Hao");
