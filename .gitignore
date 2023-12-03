@@ -1,2 +1,11 @@
-./.idea
 ./color.html
+document/pathways.pdf
+.idea/.gitignore
+.idea/complete-javascript-course-master.iml
+.idea/git_toolbox_prj.xml
+.idea/jsLibraryMappings.xml
+.idea/modules.xml
+.idea/prettier.xml
+.idea/vcs.xml
+.idea/codeStyles/codeStyleConfig.xml
+.idea/codeStyles/Project.xml

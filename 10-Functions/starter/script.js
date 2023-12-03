@@ -288,3 +288,29 @@
  }
  console.log(isPrivate);
  console.log(notPrivate); */
+
+///////////////////////////////////////
+// Closure
+
+// Any function always has access to the variable environment of the execusion content in which the function was created.
+// Closure: VE attached to the function, exactly as it was at the time and place the function was created.
+// Closure is prior to the scope chain.
+
+// A closure is the closed-over **variable environment** of the execution context **in which a function was created**, even after that execution context is gone;
+
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+booker(); // 1 passenger
+booker(); // 2 passenger
+booker();
+
+console.dir(booker);

@@ -869,3 +869,7 @@ A `for...of` loop exits when the iterator has completed (the iterator's `next()`
 ## First-Class and Higher-Order Functions
 
 ![function](C:\Learning\HTML\complete-javascript-course-master\assets\function.PNG)
+
+## Closure
+
+![closure2](C:\Learning\HTML\complete-javascript-course-master\assets\closure2.jpg)![closure1](C:\Learning\HTML\complete-javascript-course-master\assets\closure1.jpg)
