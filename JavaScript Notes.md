@@ -16,7 +16,7 @@
 
 ### First-class functions
 
-In a language with **first-class functions, ** functions are simply **treated as variables**. We can pss them into other functions, and return them from functions
+In a language with **first-class functions, ** functions are simply **treated as variables**. We can pass them into other functions, and return them from functions
 
 "First-class functions" 是一个编程语言特性，指的是编程语言将函数视为一等公民（First-class citizens）或一等对象（First-class objects），并赋予它们与其他数据类型相同的权利和地位。在具有这种特性的编程语言中，函数可以像其他数据类型一样自由地传递、分配给变量、作为参数传递给其他函数，并从其他函数返回。
 
@@ -56,7 +56,7 @@ Complication : Entire code is converted into machine code at once, and written t
 
 Interpreter runs through the source code and executes it line by line.
 
-Just-in-time (JIT) complication: Entire cdoe is converted into machine code at once, then executed immediately. 
+Just-in-time (JIT) complication: Entire code is converted into machine code at once, then executed immediately. 
 
 <img src="./assets/compilation-interpretation.JPG" alt="compilation-interpretation" style="zoom: 25%;" />
 
@@ -85,7 +85,7 @@ For `Node.js`, there is no WEB APIs.
 执行上下文主要包括三个部分：
 
 1. **全局执行上下文（Global Execution Context）**：
-   - 这是代码运行时的默认环境，在浏览器中，全局执行上下文创建了一个全局对象`window`，而在Node.js中则是`global`。
+   - 这是代码运行时的默认环境，在浏览器中，全局执行上下文创建了一个全局对象`window`，而在`Node.js`中则是`global`。
    - 代码中所有不在函数内部的变量和函数都是在全局执行上下文中声明的。
    - 在一个程序中只有一个全局执行上下文。
 
@@ -216,7 +216,7 @@ if (true) {
 
 ![IMG_2640](./assets/IMG_2640.PNG)
 
-Function expressions and arrows cannot be used before we declare them.
+Function expressions and arrow functions cannot be used before we declare them.
 
 Function delaratoins can be used before we declare them.
 
@@ -330,8 +330,8 @@ const jessica = {
 
 const marriedJessica = jessica;
 marriedJessica.lastName = "Davis";
-console.log("Before marriage", jessica); // Davis
-console.log("After marriage", marriedJessica); // Davis
+console.log("Before marriage", jessica.lastName); // Davis
+console.log("After marriage", marriedJessica.lastName); // Davis
 ```
 
 ```javascript
@@ -345,13 +345,13 @@ const jessica2 = {
 
 const jessicaCopy = Object.assign({}, jessica2);
 jessicaCopy.lastName = "Davis";
-console.log("Before marriage", jessica2);	// Williams
-console.log("After marriage", jessicaCopy);	// Davis
+console.log("Before marriage", jessica2.lastName);	// Williams
+console.log("After marriage", jessicaCopy.lastName);	// Davis
 
 jessicaCopy.family.push("Mary");
 jessicaCopy.family.push("John");
-console.log("Before marriage", jessica2); // ["Alice", "Bob", "Mary", "John"]
-console.log("After marriage", jessicaCopy); // ["Alice", "Bob", "Mary", "John"]
+console.log("Before marriage", jessica2.family); // ["Alice", "Bob", "Mary", "John"]
+console.log("After marriage", jessicaCopy.family); // ["Alice", "Bob", "Mary", "John"]
 ```
 
 依然是浅拷贝, `assign`依然只是拷贝了`family`的reference. 所以`jessicaCopy`的改变也会作用于`jessica2`.
