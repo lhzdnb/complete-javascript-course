@@ -81,6 +81,19 @@ function displayMovement(movements) {
 
 displayMovement(account1.movements);
 
+function createUsernames(accounts) {
+  accounts.forEach((account) => {
+    account.username = account.owner
+      .toLowerCase()
+      .split(" ")
+      .map((name) => name[0])
+      .join("");
+  });
+}
+
+createUsernames(accounts);
+console.log(accounts);
+
 // console.log(containerMovements.innerHTML);
 
 /////////////////////////////////////////////////
@@ -187,22 +200,25 @@ displayMovement(account1.movements);
  });
  */
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-const eurToUsd = 1.1;
-const movementsUSD = movements.map((mov) => mov * eurToUsd);
-console.log(movementsUSD);
-
-const movementsUSDfor = [];
-for (const move of movements) {
-  movementsUSDfor.push(move * eurToUsd);
-}
-console.log(movementsUSDfor);
-
-const movementsDescriptions = movements.map(
-  (mov, i) =>
-    `Movement ${i + 1}: You ${mov > 0 ? "deposit" : "withdraw"} ${mov}`,
-);
-console.log(movementsDescriptions);
+/*
+ /////////////////////////////////////////////////
+ // map
+ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+ const eurToUsd = 1.1;
+ const movementsUSD = movements.map((mov) => mov * eurToUsd);
+ console.log(movementsUSD);
+ 
+ const movementsUSDfor = [];
+ for (const move of movements) {
+ movementsUSDfor.push(move * eurToUsd);
+ }
+ console.log(movementsUSDfor);
+ 
+ const movementsDescriptions = movements.map(
+ (mov, i) =>
+ `Movement ${i + 1}: You ${mov > 0 ? "deposit" : "withdraw"} ${mov}`,
+ );
+ console.log(movementsDescriptions); */
 
 /////////////////////////////////////////////////
 
