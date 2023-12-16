@@ -61,11 +61,31 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
+function displayMovement(movements) {
+  containerMovements.innerHTML = "";
+  movements.forEach((movement, i) => {
+    const type = movement > 0 ? `deposit` : `withdrawal`;
+
+    const html = `
+    <div class="movements__row">
+      <div class="movements__type movements__type--${type}">${
+        i + 1
+      } ${type}</div>
+      <div class="movements__value">${movement}</div>
+    </div>
+    `;
+
+    containerMovements.insertAdjacentHTML("afterbegin", html);
+  });
+}
+
+displayMovement(account1.movements);
+
+console.log(containerMovements.innerHTML);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
-
-/////////////////////////////////////////////////
 
 /*
  ////////////////////////////////////
@@ -166,3 +186,7 @@ const inputClosePin = document.querySelector(".form__input--pin");
  console.log(`${value}`);
  });
  */
+/////////////////////////////////////////////////
+
+/////////////////////////////////////////////////
+// code challenge # 1
