@@ -81,6 +81,13 @@ function displayMovement(movements) {
 
 displayMovement(account1.movements);
 
+function calcPrintBalance(movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} €`;
+}
+
+calcPrintBalance(account1.movements);
+
 function createUsernames(accounts) {
   accounts.forEach((account) => {
     account.username = account.owner
@@ -92,9 +99,6 @@ function createUsernames(accounts) {
 }
 
 createUsernames(accounts);
-console.log(accounts);
-
-// console.log(containerMovements.innerHTML);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -218,7 +222,37 @@ console.log(accounts);
  (mov, i) =>
  `Movement ${i + 1}: You ${mov > 0 ? "deposit" : "withdraw"} ${mov}`,
  );
- console.log(movementsDescriptions); */
+ console.log(movementsDescriptions);
+ */
+/*
+ ////////////////////////////////////
+ // filter
+ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+ const deposits = movements.filter((movement) => movement > 0);
+ 
+ console.log(deposits);
+ 
+ const withdrawal = movements.filter((movement) => movement < 0);
+ console.log(withdrawal);
+ */
+
+////////////////////////////////////
+// reduce
+/*
+ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+ const balance = movements.reduce(
+ (accumulator, current) => (accumulator += current),
+ 0,
+ );
+ console.log(balance);
+ 
+ // Maximum value
+ const max = movements.reduce(
+ (acc, cur) => (acc > cur ? acc : cur),
+ movements[0],
+ );
+ console.log(max);
+ */
 
 /////////////////////////////////////////////////
 
@@ -242,3 +276,6 @@ console.log(accounts);
 //
 // checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 // checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+
+/////////////////////////////////////////////////
+// code challenge # 2
