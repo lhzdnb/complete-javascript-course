@@ -176,6 +176,20 @@ btnTransfer.addEventListener("click", (e) => {
   }
 });
 
+btnLoan.addEventListener("click", (e) => {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+  if (
+    amount > 0 &&
+    currentAccount.movements.some((mov) => mov >= 0.1 * amount)
+  ) {
+    // add the movement
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = "";
+  inputLoanAmount.blur();
+});
 btnClose.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -381,6 +395,23 @@ btnClose.addEventListener("click", (e) => {
  console.log(account);
  */
 
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log(movements.includes(-130));
+
+// some method
+// returns true if there is at least one element that satisfies the condition
+const anyDeposits = movements.some((mov) => mov > 1500);
+console.log(anyDeposits);
+
+// every
+// returns true if every element satisfies the condition
+console.log(account4.movements.every((mov) => mov > 0));
+
+// separate callback
+const deposit = (mov) => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
 /////////////////////////////////////////////////
 
 /////////////////////////////////////////////////
