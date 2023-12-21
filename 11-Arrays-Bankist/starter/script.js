@@ -501,6 +501,65 @@ btnSort.addEventListener("click", (e) => {
  */
 
 /////////////////////////////////////////////////
+// Array Methods Practice
+const bankDepositSum = accounts
+  .flatMap((acc) => acc.movements)
+  .filter((mov) => mov > 0)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(bankDepositSum);
+
+// 2.
+const numDeposits1000 = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce((acc, cur) => (cur >= 1000 ? ++acc : acc), 0);
+console.log(numDeposits1000);
+
+let a = 10;
+console.log(a++); // return and add 1
+console.log(++a); // add 1 and return
+
+// 3.
+const { deposits, withdrawals } = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+      sums[cur > 0 ? "deposits" : "withdrawals"] += cur;
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 },
+  );
+
+console.log(deposits, withdrawals);
+
+// 4.
+// this is a nice title -> This Is a Nice Title
+function convertTitle(title) {
+  const exceptions = [
+    "a",
+    "an",
+    "am",
+    "and",
+    "the",
+    "but",
+    "or",
+    "on",
+    "in",
+    "with",
+  ];
+  return title
+    .toLowerCase()
+    .split(" ")
+    .map((word) =>
+      exceptions.includes(word) ? word : word[0].toUpperCase() + word.slice(1),
+    )
+    .join(" ");
+}
+
+console.log(convertTitle("this is a nice title"));
+console.log(convertTitle("this is a LONG title but not too long"));
+console.log(convertTitle("and here is another title with an EXAMPLE"));
+/////////////////////////////////////////////////
 
 /////////////////////////////////////////////////
 // code challenge # 1
@@ -534,3 +593,6 @@ btnSort.addEventListener("click", (e) => {
 //
 // console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
 // console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
+
+///////////////////////////////////////////////////
+//
