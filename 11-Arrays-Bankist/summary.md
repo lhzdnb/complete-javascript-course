@@ -176,4 +176,4 @@ Description**: Tests whether all elements in the array pass the test implemented
 These methods provide a comprehensive toolkit for manipulating and iterating over arrays in JavaScript, each with their
 specific purpose and behavior.
 
-![](.\assets\summary.png)
+![summary](./assets/summary.png)
