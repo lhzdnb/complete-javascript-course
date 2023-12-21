@@ -595,4 +595,59 @@ console.log(convertTitle("and here is another title with an EXAMPLE"));
 // console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
 
 ///////////////////////////////////////////////////
-//
+// final challenge
+const dogs = [
+  { weight: 22, curFood: 250, owners: ["Alice", "Bob"] },
+  { weight: 8, curFood: 200, owners: ["Matilda"] },
+  { weight: 13, curFood: 275, owners: ["Sarah", "John"] },
+  { weight: 32, curFood: 340, owners: ["Michael"] },
+];
+
+// 1.
+dogs.forEach((dog) => (dog.recommendedFood = dog.weight ** 0.75 * 28));
+console.log(dogs);
+
+// 2.
+let sarahDog = dogs.find((dog) => dog.owners.includes("Sarah"));
+console.log(
+  sarahDog.curFood >= sarahDog.recommendedFood &&
+    sarahDog.curFood <= sarahDog.recommendedFood,
+);
+
+// 3.
+const ownerEatTooMuch = dogs
+  .filter((dog) => dog.curFood > dog.recommendedFood)
+  .flatMap((dog) => dog.owners);
+console.log(ownerEatTooMuch);
+
+const ownerEatTooLittle = dogs
+  .filter((dog) => dog.curFood < dog.recommendedFood)
+  .flatMap((dog) => dog.owners);
+console.log(ownerEatTooLittle);
+
+// 4.
+const ownerEatTooMuchString = ownerEatTooMuch.join(" and ");
+console.log(ownerEatTooMuchString + "'s dogs eat too much!");
+
+const ownerEatTooLittleString = ownerEatTooLittle.join(" and ");
+console.log(ownerEatTooLittleString + "'s dogs eat too little!");
+
+// 5.
+console.log(dogs.some((dog) => dog.curFood === dog.recommendedFood));
+
+// 6.
+const checkEatingOK = (dog) =>
+  dog.curFood < dog.recommendedFood * 1.1 &&
+  dog.curFood > dog.recommendedFood * 0.9;
+
+console.log(dogs.some(checkEatingOK));
+
+// 7.
+const dogsEatingOK = dogs.filter(checkEatingOK);
+console.log(dogsEatingOK);
+
+// 8.
+const dogsSorted = dogs
+  .slice()
+  .sort((a, b) => a.recommendedFood - b.recommendedFood);
+console.log(dogsSorted);
