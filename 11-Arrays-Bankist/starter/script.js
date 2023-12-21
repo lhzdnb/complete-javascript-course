@@ -395,23 +395,47 @@ btnClose.addEventListener("click", (e) => {
  console.log(account);
  */
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-console.log(movements.includes(-130));
+/*
+ /////////////////////////////////////
+ // some and every
+ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+ console.log(movements.includes(-130));
+ 
+ // some method
+ // returns true if there is at least one element that satisfies the condition
+ const anyDeposits = movements.some((mov) => mov > 1500);
+ console.log(anyDeposits);
+ 
+ // every
+ // returns true if every element satisfies the condition
+ console.log(account4.movements.every((mov) => mov > 0));
+ 
+ // separate callback
+ const deposit = (mov) => mov > 0;
+ console.log(movements.some(deposit));
+ console.log(movements.every(deposit));
+ console.log(movements.filter(deposit));
+ */
 
-// some method
-// returns true if there is at least one element that satisfies the condition
-const anyDeposits = movements.some((mov) => mov > 1500);
-console.log(anyDeposits);
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
 
-// every
-// returns true if every element satisfies the condition
-console.log(account4.movements.every((mov) => mov > 0));
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat());
+console.log(arrDeep.flat(2));
 
-// separate callback
-const deposit = (mov) => mov > 0;
-console.log(movements.some(deposit));
-console.log(movements.every(deposit));
-console.log(movements.filter(deposit));
+// flat
+const overallBalance = accounts
+  .map((acc) => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
+
+// flatMap
+const overallBalance2 = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance2);
 /////////////////////////////////////////////////
 
 /////////////////////////////////////////////////
