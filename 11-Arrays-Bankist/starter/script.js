@@ -99,7 +99,7 @@ function calcDisplaySummary(account) {
   const interest = account.movements
     .filter((mov) => mov > 0)
     .map((deposit) => (deposit * account.interestRate) / 100)
-    .filter((interest, i, arr) => {
+    .filter((interest) => {
       return interest >= 1;
     })
     .reduce((acc, interest) => acc + interest, 0);
