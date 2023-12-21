@@ -176,6 +176,27 @@ btnTransfer.addEventListener("click", (e) => {
   }
 });
 
+btnClose.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  console.log("Delete");
+  if (
+    currentAccount.username === inputCloseUsername.value &&
+    currentAccount.pin === Number(inputClosePin.value)
+  ) {
+    const index = accounts.findIndex(
+      (acc) => acc.username === currentAccount.username,
+    );
+    console.log(index);
+    // delete account
+    accounts.splice(index, 1);
+    // hide UI
+    containerApp.style.opacity = "0";
+  }
+  inputCloseUsername.value = inputCloseUsername.value = "";
+  labelWelcome.textContent = "Log in to get started";
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
