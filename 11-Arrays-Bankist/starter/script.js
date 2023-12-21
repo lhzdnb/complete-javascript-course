@@ -468,33 +468,37 @@ btnSort.addEventListener("click", (e) => {
  console.log(movements.sort((a, b) => b - a));
  */
 
-const x = new Array(7);
-console.log(x);
-
-x.fill(1, 3, 5);
-console.log(x);
-
-const arr = [1, 2, 3, 4, 5, 6, 7];
-arr.fill(23, 4, 6);
-console.log(arr);
-
-// from
-const y = Array.from({ length: 7 }, (_, index) => index + 1);
-console.log(y);
-
-labelBalance.addEventListener("click", () => {
-  const movementsUI = Array.from(
-    document.querySelectorAll(".movements__value"),
-    (element) => element.textContent.replace("€", ""),
-  );
-  console.log(movementsUI);
-
-  const movementsUI2 = [...document.querySelectorAll(".movements__value")];
-  const newMovementsUI2 = movementsUI2.map((movement) =>
-    movement.textContent.replace("€", ""),
-  );
-  console.log(newMovementsUI2);
-});
+/*
+ ////////////////////////////////////////////////////
+ // creating and filling arrays
+ const x = new Array(7);
+ console.log(x);
+ 
+ x.fill(1, 3, 5);
+ console.log(x);
+ 
+ const arr = [1, 2, 3, 4, 5, 6, 7];
+ arr.fill(23, 4, 6);
+ console.log(arr);
+ 
+ // from
+ const y = Array.from({ length: 7 }, (_, index) => index + 1);
+ console.log(y);
+ 
+ labelBalance.addEventListener("click", () => {
+ const movementsUI = Array.from(
+ document.querySelectorAll(".movements__value"),
+ (element) => element.textContent.replace("€", ""),
+ );
+ console.log(movementsUI);
+ 
+ const movementsUI2 = [...document.querySelectorAll(".movements__value")];
+ const newMovementsUI2 = movementsUI2.map((movement) =>
+ movement.textContent.replace("€", ""),
+ );
+ console.log(newMovementsUI2);
+ });
+ */
 
 /////////////////////////////////////////////////
 
