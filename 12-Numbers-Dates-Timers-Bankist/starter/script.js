@@ -311,20 +311,37 @@ btnSort.addEventListener('click', e => {
  console.log((2.7).toFixed(3));
  console.log(+(2.345).toFixed(2));
  */
+/*
+ ///////////////////////////////////////////////
+ // remainder operator
+ console.log(5 % 2);
+ console.log(5 / 2);
+ 
+ console.log(8 % 3);
+ console.log(8 / 3);
+ 
+ const isEven = num => !(num % 2);
+ console.log(isEven(8));
+ console.log(isEven(23));
+ 
+ labelBalance.addEventListener('click', () => {
+ [...document.querySelectorAll('.movements__row')].forEach((row, i) => {
+ if (i % 2 === 0) row.style.backgroundColor = 'orangered';
+ if (i % 3 === 0) row.style.backgroundColor = 'blue';
+ });
+ });
+ */
 
-console.log(5 % 2);
-console.log(5 / 2);
+const diameter = 287_460_000_000;
+console.log(diameter);
 
-console.log(8 % 3);
-console.log(8 / 3);
+const price = 345_99;
+console.log(price);
 
-const isEven = num => !(num % 2);
-console.log(isEven(8));
-console.log(isEven(23));
+const transferFee1 = 15_00;
+const transferFee2 = 1_500;
 
-labelBalance.addEventListener('click', () => {
-  [...document.querySelectorAll('.movements__row')].forEach((row, i) => {
-    if (i % 2 === 0) row.style.backgroundColor = 'orangered';
-    if (i % 3 === 0) row.style.backgroundColor = 'blue';
-  });
-});
+const PI = 3.14_15;
+console.log(PI);
+
+console.log(Number('230_000')); // NaN
