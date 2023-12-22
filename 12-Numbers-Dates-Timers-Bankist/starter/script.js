@@ -331,17 +331,49 @@ btnSort.addEventListener('click', e => {
  });
  });
  */
-
-const diameter = 287_460_000_000;
-console.log(diameter);
-
-const price = 345_99;
-console.log(price);
-
-const transferFee1 = 15_00;
-const transferFee2 = 1_500;
-
-const PI = 3.14_15;
-console.log(PI);
-
-console.log(Number('230_000')); // NaN
+/*
+ ///////////////////////////////////////////////
+ // Numeric Separators
+ const diameter = 287_460_000_000;
+ console.log(diameter);
+ 
+ const price = 345_99;
+ console.log(price);
+ 
+ const transferFee1 = 15_00;
+ const transferFee2 = 1_500;
+ 
+ const PI = 3.14_15;
+ console.log(PI);
+ 
+ console.log(Number('230_000')); // NaN
+ */
+/*
+ ////////////////////////////////////////
+ // bigInt
+ console.log(2 ** 53 - 1);
+ console.log(Number.MAX_SAFE_INTEGER);
+ console.log(Number.MAX_VALUE);
+ 
+ console.log(BigInt(483730242));
+ 
+ // Operations
+ console.log(10000n + 10000n);
+ console.log(42354534523853409583405834n * 4534534n);
+ 
+ const huge = 32342345534543543n;
+ const num = 23;
+ // console.log(huge * num);
+ 
+ // Exceptions
+ console.log(20n > 15);
+ console.log(20n === 20);
+ console.log(20n == 20);
+ console.log(20n == '20');
+ 
+ console.log(huge + ' is really big');
+ 
+ // Divisions
+ console.log(11n / 3n);
+ console.log(10 / 3);
+ */
