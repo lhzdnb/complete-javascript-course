@@ -271,40 +271,60 @@ btnSort.addEventListener('click', e => {
  console.log(Number.isInteger(23));
  console.log(Number.isInteger(23.0));
  */
+/*
+ ///////////////////////////////////////////
+ // Math and Rounding
+ console.log(Math.sqrt(25));
+ console.log(25 ** (1 / 2));
+ console.log(Math.max(5, 18, 23, 11, 2));
+ console.log(Math.max(5, 18, '23', 11, 2));
+ console.log(Math.max(5, 18, '23px', 11, 2));
+ 
+ console.log(Math.max(5, 18, 23, 11, 2));
+ console.log(Math.PI * Number.parseFloat('10px') ** 2);
+ 
+ console.log(Math.floor(Math.random() * 6) + 1);
+ 
+ const randomInt = (min, max) =>
+ Math.trunc(Math.random() * (max - min) + 1) + min;
+ 
+ console.log(randomInt(10, 20));
+ 
+ // Rounding integers
+ console.log(Math.round(23.3));
+ console.log(Math.round(23.9));
+ 
+ console.log(Math.ceil(23.3));
+ console.log(Math.ceil(23.0));
+ 
+ console.log(Math.floor(23.3));
+ console.log(Math.floor('23.9'));
+ 
+ console.log(Math.trunc(23.3));
+ 
+ console.log(Math.trunc(-23.3));
+ console.log(Math.floor(-23.3));
+ 
+ // Rounding decimals
+ // toFixed returns a string
+ console.log((2.7).toFixed(0));
+ console.log((2.7).toFixed(3));
+ console.log(+(2.345).toFixed(2));
+ */
 
-console.log(Math.sqrt(25));
-console.log(25 ** (1 / 2));
-console.log(Math.max(5, 18, 23, 11, 2));
-console.log(Math.max(5, 18, '23', 11, 2));
-console.log(Math.max(5, 18, '23px', 11, 2));
+console.log(5 % 2);
+console.log(5 / 2);
 
-console.log(Math.max(5, 18, 23, 11, 2));
-console.log(Math.PI * Number.parseFloat('10px') ** 2);
+console.log(8 % 3);
+console.log(8 / 3);
 
-console.log(Math.floor(Math.random() * 6) + 1);
+const isEven = num => !(num % 2);
+console.log(isEven(8));
+console.log(isEven(23));
 
-const randomInt = (min, max) =>
-  Math.trunc(Math.random() * (max - min) + 1) + min;
-
-console.log(randomInt(10, 20));
-
-// Rounding integers
-console.log(Math.round(23.3));
-console.log(Math.round(23.9));
-
-console.log(Math.ceil(23.3));
-console.log(Math.ceil(23.0));
-
-console.log(Math.floor(23.3));
-console.log(Math.floor('23.9'));
-
-console.log(Math.trunc(23.3));
-
-console.log(Math.trunc(-23.3));
-console.log(Math.floor(-23.3));
-
-// Rounding decimals
-// toFixed returns a string
-console.log((2.7).toFixed(0));
-console.log((2.7).toFixed(3));
-console.log(+(2.345).toFixed(2));
+labelBalance.addEventListener('click', () => {
+  [...document.querySelectorAll('.movements__row')].forEach((row, i) => {
+    if (i % 2 === 0) row.style.backgroundColor = 'orangered';
+    if (i % 3 === 0) row.style.backgroundColor = 'blue';
+  });
+});
