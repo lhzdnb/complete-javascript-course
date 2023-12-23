@@ -216,8 +216,6 @@ const options = {
   weekday: 'long',
 };
 const locale = navigator.language;
-console.log(locale);
-
 labelDate.textContent = new Intl.DateTimeFormat(locale, options).format(now);
 
 btnLogin.addEventListener('click', e => {
@@ -290,11 +288,13 @@ btnLoan.addEventListener('click', e => {
   e.preventDefault();
   const amount = Math.floor(inputLoanAmount.value);
   if (amount > 0 && currentAccount.movements.some(mov => mov >= 0.1 * amount)) {
-    // add the movement
-    currentAccount.movements.push(amount);
-    // Add transfer date
-    currentAccount.movementsDates.push(new Date().toISOString());
-    updateUI(currentAccount);
+    setTimeout(() => {
+      // add the movement
+      currentAccount.movements.push(amount);
+      // Add transfer date
+      currentAccount.movementsDates.push(new Date().toISOString());
+      updateUI(currentAccount);
+    }, 2500);
   }
   inputLoanAmount.value = '';
   inputLoanAmount.blur();
@@ -310,7 +310,6 @@ btnClose.addEventListener('click', e => {
     const index = accounts.findIndex(
       acc => acc.username === currentAccount.username,
     );
-    console.log(index);
     // delete account
     accounts.splice(index, 1);
     // hide UI
@@ -516,20 +515,44 @@ btnSort.addEventListener('click', e => {
  const days1 = calcDaysPassed(new Date(2037, 3, 4), new Date(2037, 3, 14));
  console.log(days1);
  */
+/*
+ ////////////////////////////////////////////
+ // format numbers using Intl
+ const num = 3884764.23;
+ 
+ const option = {
+ style: 'currency',
+ unit: 'celsius',
+ currency: 'EUR',
+ // useGrouping: false,
+ };
+ 
+ console.log('US: ', new Intl.NumberFormat('en-US', option).format(num));
+ console.log('Germany', new Intl.NumberFormat('de-DE', option).format(num));
+ console.log('Syria', new Intl.NumberFormat('ar-SY', option).format(num));
+ console.log(
+ navigator.language,
+ new Intl.NumberFormat(navigator.language, option).format(num),
+ );
+ */
 
-const num = 3884764.23;
-
-const option = {
-  style: 'currency',
-  unit: 'celsius',
-  currency: 'EUR',
-  // useGrouping: false,
-};
-
-console.log('US: ', new Intl.NumberFormat('en-US', option).format(num));
-console.log('Germany', new Intl.NumberFormat('de-DE', option).format(num));
-console.log('Syria', new Intl.NumberFormat('ar-SY', option).format(num));
-console.log(
-  navigator.language,
-  new Intl.NumberFormat(navigator.language, option).format(num),
-);
+/*
+ //////////////////////////////////////
+ // timers: setTimeout and setInterval
+ // setTimeout
+ const ingredients = ['olives', 'spinach'];
+ const pizzaTimer = setTimeout(
+ (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2} 🍕`),
+ 3000,
+ ...ingredients,
+ );
+ console.log('Waiting...');
+ 
+ if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+ 
+ // setInterval
+ setInterval(() => {
+ const now = new Date();
+ console.log(now);
+ }, 3000);
+ */
