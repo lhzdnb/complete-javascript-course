@@ -227,5 +227,3 @@ document.querySelector('.nav__links').addEventListener('click', e => {
  // true,
  );
  */
-
-// Event delegation
