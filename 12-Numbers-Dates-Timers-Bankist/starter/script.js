@@ -82,11 +82,11 @@ const inputClosePin = document.querySelector('.form__input--pin');
 // Functions
 
 function formatMovementDate(date, locale) {
-  const day = `${date.getDay()}`.padStart(2, '0');
-  const month = `${date.getMonth() + 1}`.padStart(2, '0');
-  const year = date.getFullYear();
+  // const day = `${date.getDay()}`.padStart(2, '0');
+  // const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  // const year = date.getFullYear();
 
-  const displayDate = `${day}/${month}/${year}`;
+  // const displayDate = `${day}/${month}/${year}`;
 
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
@@ -196,14 +196,40 @@ function updateUI(currentAccount) {
 }
 
 createUsernames(accounts);
+
+function startLogOutTimer() {
+  const tick = () => {
+    const min = Math.floor(time / 60)
+      .toString()
+      .padStart(2, '0');
+    const second = String(time % 60).padStart(2, '0');
+    // in each call, print the remaining time to UI
+    labelTimer.textContent = `${min}: ${second}`;
+    // when 0 second, stop timer and log out user
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = '0';
+    }
+    // decrease 1 sec
+    time--;
+  };
+  // set time to 5 minutes
+  let time = 300;
+  // call the timer very second
+  tick();
+  const timer = setInterval(tick, 1000);
+
+  return timer;
+}
+
 ///////////////////////////
 // Event handler
-let currentAccount;
-
+let currentAccount, timer;
 // FAKE ALWAYS LOGIN
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = '100';
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = '100';
 
 // Experimenting API
 const now = new Date();
@@ -252,6 +278,10 @@ btnLogin.addEventListener('click', e => {
     // clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
+
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer();
+
     // update UI
     updateUI(currentAccount);
   }
@@ -281,6 +311,10 @@ btnTransfer.addEventListener('click', e => {
 
     // update UI
     updateUI(currentAccount);
+
+    // reset a timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -298,11 +332,14 @@ btnLoan.addEventListener('click', e => {
   }
   inputLoanAmount.value = '';
   inputLoanAmount.blur();
+
+  // reset a timer
+  clearInterval(timer);
+  timer = startLogOutTimer();
 });
 btnClose.addEventListener('click', e => {
   e.preventDefault();
 
-  console.log('Delete');
   if (
     currentAccount.username === inputCloseUsername.value &&
     currentAccount.pin === Number(inputClosePin.value)
@@ -324,6 +361,10 @@ btnSort.addEventListener('click', e => {
   e.preventDefault();
   displayMovements(currentAccount, !isSorted);
   isSorted = !isSorted;
+
+  // reset a timer
+  clearInterval(timer);
+  timer = startLogOutTimer();
 });
 
 // day/month/year
