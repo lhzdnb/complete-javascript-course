@@ -111,3 +111,35 @@ logo.classList.contains('c');
 
 // Don't use
 // logo.className = 'jonas'; // remove all other classes
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', e => {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+
+  console.log(e.target.getBoundingClientRect());
+  console.log('Current scroll (X/Y)', window.scrollX, scrollX);
+
+  console.log(
+    'height/width viewport',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth,
+  );
+  // scrolling
+
+  // Scroll to the absolute position of an element on the page.
+  // The absolute position is calculated by adding the current scroll position
+  // of the page (window.scrollX, window.scrollY) to the relative position of
+  // the element within the viewport (s1coords.left, s1coords.top). The
+  // scrolling behavior is set to 'smooth'.
+
+  // window.scrollTo({
+  //   left: s1coords.left + window.scrollX,
+  //   top: s1coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+  // modern way
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
