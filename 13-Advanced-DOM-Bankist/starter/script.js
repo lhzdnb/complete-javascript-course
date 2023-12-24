@@ -17,6 +17,10 @@ const nav = document.querySelector('.nav');
 const header = document.querySelector('.header');
 const allSections = document.querySelectorAll('.section');
 const imgTargets = document.querySelectorAll('img[data-src]');
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+const dotContainer = document.querySelector('.dots');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -174,6 +178,73 @@ const imgObserver = new IntersectionObserver(loadImg, {
 });
 
 imgTargets.forEach(img => imgObserver.observe(img));
+
+// Slider
+function slider() {
+  let curSlide = 0;
+
+  function goToSlide(slide) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`),
+    );
+  }
+
+  function creatDots() {
+    slides.forEach((_, i) => {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${i}"></button>`,
+      );
+    });
+  }
+
+  function activateDot(slide) {
+    document
+      .querySelectorAll('.dots__dot')
+      .forEach(dot => dot.classList.remove('dots__dot--active'));
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add('dots__dot--active');
+  }
+
+  creatDots();
+  activateDot(0);
+  goToSlide(0);
+
+  function nextSlide() {
+    curSlide++;
+    if (curSlide >= slides.length) curSlide = 0;
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  }
+
+  function previousSlide() {
+    curSlide--;
+    if (curSlide === -1) curSlide = slides.length - 1;
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  }
+
+  // next slide
+  btnRight.addEventListener('click', nextSlide);
+  // previous slide
+  btnLeft.addEventListener('click', previousSlide);
+
+  document.addEventListener('keydown', e => {
+    if (e.code === 'ArrowRight') nextSlide();
+    else if (e.code === 'ArrowLeft') previousSlide();
+  });
+
+  dotContainer.addEventListener('click', e => {
+    if (e.target.classList.contains('dots__dot')) {
+      curSlide = e.target.dataset.slide;
+      goToSlide(curSlide);
+      activateDot(curSlide);
+    }
+  });
+}
+
+slider();
 
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
@@ -370,3 +441,15 @@ imgTargets.forEach(img => imgObserver.observe(img));
  if (element !== h1) element.style.transform = 'scale(0.5)';
  });
  */
+document.addEventListener('DOMContentLoaded', e => {
+  console.log('HTML parsed and DOM tree built!');
+});
+
+window.addEventListener('load', e => {
+  console.log('Page fully loaded.', e);
+});
+
+// window.addEventListener('beforeunload', e => {
+//   e.preventDefault();
+//   console.log(e);
+// });
