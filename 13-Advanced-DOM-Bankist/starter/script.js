@@ -9,7 +9,10 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
-
+// tabbed component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -60,6 +63,22 @@ document.querySelector('.nav__links').addEventListener('click', e => {
     console.log(id);
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
+});
+
+// tabbed component
+tabsContainer.addEventListener('click', e => {
+  const clicked = e.target.closest('.operations__tab');
+  if (!clicked) return; // guard clause
+  // active tab
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+  clicked.classList.add('operations__tab--active');
+  // activate content area
+  tabsContent.forEach(content =>
+    content.classList.remove('operations__content--active'),
+  );
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
 });
 
 ///////////////////////////////////////////////
@@ -227,31 +246,33 @@ document.querySelector('.nav__links').addEventListener('click', e => {
  // true,
  );
  */
-
-const h1 = document.querySelector('h1');
-
-// going downwards: child
-console.log(h1.querySelectorAll('.highlight'));
-console.log(h1.childNodes);
-console.log(h1.children); // direct children
-h1.firstElementChild.style.color = 'white';
-h1.lastElementChild.style.color = 'orangered';
-
-// going upwards: parent
-console.log(h1.parentNode);
-console.log(h1.parentElement);
-
-h1.closest('.header').style.background = 'var(--gradient-secondary)';
-h1.closest('h1').style.background = 'var(--gradient-primary)';
-
-// going sideways: siblings
-console.log(h1.previousElementSibling);
-console.log(h1.nextElementSibling);
-
-console.log(h1.previousSibling);
-console.log(h1.nextSibling);
-
-console.log(h1.parentElement.children);
-[...h1.parentElement.children].forEach(element => {
-  if (element !== h1) element.style.transform = 'scale(0.5)';
-});
+/*
+ // DOM traversing
+ const h1 = document.querySelector('h1');
+ 
+ // going downwards: child
+ console.log(h1.querySelectorAll('.highlight'));
+ console.log(h1.childNodes);
+ console.log(h1.children); // direct children
+ h1.firstElementChild.style.color = 'white';
+ h1.lastElementChild.style.color = 'orangered';
+ 
+ // going upwards: parent
+ console.log(h1.parentNode);
+ console.log(h1.parentElement);
+ 
+ h1.closest('.header').style.background = 'var(--gradient-secondary)';
+ h1.closest('h1').style.background = 'var(--gradient-primary)';
+ 
+ // going sideways: siblings
+ console.log(h1.previousElementSibling);
+ console.log(h1.nextElementSibling);
+ 
+ console.log(h1.previousSibling);
+ console.log(h1.nextSibling);
+ 
+ console.log(h1.parentElement.children);
+ [...h1.parentElement.children].forEach(element => {
+ if (element !== h1) element.style.transform = 'scale(0.5)';
+ });
+ */
