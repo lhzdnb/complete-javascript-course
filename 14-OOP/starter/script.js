@@ -33,3 +33,21 @@ console.log(lhzdnb, chiaki);
 const lh = 'lh';
 console.log(lhzdnb instanceof Person);
 console.log(lh instanceof Person);
+
+// prototypes
+console.log(Person.prototype);
+Person.prototype.calcAge = function () {
+  console.log(2023 - this.birthYear);
+};
+
+lhzdnb.calcAge();
+chiaki.calcAge();
+
+console.log(lhzdnb.__proto__);
+console.log(lhzdnb.__protp__ === Person.prototype); // false
+console.log(Person.prototype.isPrototypeOf(lhzdnb));
+
+Person.prototype.species = 'Homo Sapiens';
+console.log(lhzdnb.species, chiaki.species);
+console.log(lhzdnb.hasOwnProperty('firstName'));
+console.log(lhzdnb.hasOwnProperty('species'));
