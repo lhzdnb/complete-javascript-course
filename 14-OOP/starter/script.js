@@ -1,10 +1,10 @@
 'use strict';
 
-function Person(firstName, birthYear) {
-  this.firstName = firstName;
-  this.birthYear = birthYear;
-  // never create methods in constructor functions
-}
+/* function Person(firstName, birthYear) {
+ this.firstName = firstName;
+ this.birthYear = birthYear;
+ // never create methods in constructor functions
+ } */
 
 // 1. New {} is created
 // 2. function is called, this = {}
@@ -24,55 +24,156 @@ function Person(firstName, birthYear) {
  * The `instanceof` operator is used to check if an object is an instance of a
  * particular constructor function. In the code, it's used to check if `lhzdnb`
  * and `lh` are instances of `Person`.
- * @type {Person}
+ *
+ */
+/*
+ 
+ const lhzdnb = new Person('lhzdnb', 2002);
+ const chiaki = new Person('chiaki', 2002);
+ console.log(lhzdnb, chiaki);
+ const lh = 'lh';
+ console.log(lhzdnb instanceof Person);
+ console.log(lh instanceof Person);
+ 
+ // prototypes
+ console.log(Person.prototype);
+ Person.prototype.calcAge = function () {
+ console.log(2023 - this.birthYear);
+ };
+ 
+ lhzdnb.calcAge();
+ chiaki.calcAge();
+ 
+ console.log(lhzdnb.__proto__);
+ console.log(lhzdnb.__proto__ === Person.prototype); // true
+ console.log(Person.prototype.isPrototypeOf(lhzdnb));
+ 
+ Person.prototype.species = 'Homo Sapiens';
+ console.log(lhzdnb.species, chiaki.species);
+ console.log(lhzdnb.hasOwnProperty('firstName'));
+ console.log(lhzdnb.hasOwnProperty('species'));
+ // lhzdnb.species 已经变成了一个独立于原型的实例属性，而不再是共享的 Person.prototype.species 属性。
+ // 这是 JavaScript 原型继承机制的典型表现，其中实例属性优先于原型属性。
+ // lhzdnb.species = '大帅逼';
+ // console.log(lhzdnb.species, chiaki.species, Person.prototype.species);
+ // console.log(lhzdnb, chiaki);
+ 
+ console.log(lhzdnb.__proto__.__proto__); // Object.prototype
+ console.log(lhzdnb.__proto__.__proto__.__proto__); // null
+ 
+ console.log(Person.prototype.constructor);
+ 
+ const arr = [3, 6, 4, 5, 6, 9, 3];
+ console.log(arr.__proto__);
+ console.log(arr.__proto__ === Array.prototype); // true
+ console.log(arr.__proto__.__proto__);
+ 
+ Array.prototype.unique = function () {
+ return [...new Set(this)];
+ };
+ 
+ console.log(arr.unique());
+ 
+ const h1 = document.querySelector('h1');
+ console.dir(h1);
+ console.dir(x => x + 1);
  */
 
-const lhzdnb = new Person('lhzdnb', 2002);
-const chiaki = new Person('chiaki', 2002);
-console.log(lhzdnb, chiaki);
-const lh = 'lh';
-console.log(lhzdnb instanceof Person);
-console.log(lh instanceof Person);
+///////////////////////////////////////
+// code challenge 1
+/* function Car(make, speed) {
+ this.make = make;
+ this.speed = speed;
+ }
+ 
+ const car1 = new Car('BMW', 120);
+ const car2 = new Car('Mercedes', 95);
+ console.log(car1.make, car2.make);
+ 
+ Car.prototype.accelerate = function () {
+ this.speed += 10;
+ };
+ Car.prototype.brake = function () {
+ this.speed -= 5;
+ };
+ 
+ car1.accelerate();
+ console.log(car1.speed);
+ car1.accelerate();
+ console.log(car1.speed);
+ car1.brake();
+ console.log(car1.speed);
+ 
+ car2.accelerate();
+ console.log(car2.speed);
+ car2.accelerate();
+ console.log(car2.speed);
+ car2.brake();
+ console.log(car2.speed); */
 
-// prototypes
-console.log(Person.prototype);
-Person.prototype.calcAge = function () {
-  console.log(2023 - this.birthYear);
-};
+// class expression
+// const PersonCl = class {
+//
+// }
 
+// class declaration
+class PersonCl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  calcAge() {
+    console.log(2023 - this.birthYear);
+  }
+
+  get age() {
+    return 2023 - this.birthYear;
+  }
+
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name.`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+}
+
+const lhzdnb = new PersonCl('Liang Hao', 2002);
+console.log(lhzdnb);
 lhzdnb.calcAge();
-chiaki.calcAge();
+console.log(lhzdnb.__proto__ === PersonCl.prototype);
 
-console.log(lhzdnb.__proto__);
-console.log(lhzdnb.__proto__ === Person.prototype); // true
-console.log(Person.prototype.isPrototypeOf(lhzdnb));
+PersonCl.prototype.greet = function () {
+  console.log(`Hey ${this.firstName}`);
+};
+lhzdnb.greet();
 
-Person.prototype.species = 'Homo Sapiens';
-console.log(lhzdnb.species, chiaki.species);
-console.log(lhzdnb.hasOwnProperty('firstName'));
-console.log(lhzdnb.hasOwnProperty('species'));
-// lhzdnb.species 已经变成了一个独立于原型的实例属性，而不再是共享的 Person.prototype.species 属性。
-// 这是 JavaScript 原型继承机制的典型表现，其中实例属性优先于原型属性。
-// lhzdnb.species = '大帅逼';
-// console.log(lhzdnb.species, chiaki.species, Person.prototype.species);
-// console.log(lhzdnb, chiaki);
+// 1. Classes are not hoisted
+// 2. Class are first-class citizens
+// 3. Classes are executed in strict mode
 
-console.log(lhzdnb.__proto__.__proto__); // Object.prototype
-console.log(lhzdnb.__proto__.__proto__.__proto__); // null
+const walter = new PersonCl('Walter White', 2020);
 
-console.log(Person.prototype.constructor);
+const account = {
+  owner: 'lhzdnb',
+  movement: [200, 530, 120, 300],
 
-const arr = [3, 6, 4, 5, 6, 9, 3];
-console.log(arr.__proto__);
-console.log(arr.__proto__ === Array.prototype); // true
-console.log(arr.__proto__.__proto__);
+  get latest() {
+    return this.movement.slice(-1).pop();
+  },
 
-Array.prototype.unique = function () {
-  return [...new Set(this)];
+  set latest(mov) {
+    this.movement.push(mov);
+  },
 };
 
-console.log(arr.unique());
+console.log(account.latest);
+console.log(account.movement);
 
-const h1 = document.querySelector('h1');
-console.dir(h1);
-console.dir(x => x + 1);
+account.latest = 50;
+console.log(account.movement);
+console.log(lhzdnb.age);
+console.log(lhzdnb.fullName);
