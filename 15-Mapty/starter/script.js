@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // prettier-ignore
 const months = [
@@ -15,50 +15,88 @@ const months = [
   'November',
   'December'];
 
-const form = document.querySelector('.form');
-const containerWorkouts = document.querySelector('.workouts');
-const inputType = document.querySelector('.form__input--type');
-const inputDistance = document.querySelector('.form__input--distance');
-const inputDuration = document.querySelector('.form__input--duration');
-const inputCadence = document.querySelector('.form__input--cadence');
-const inputElevation = document.querySelector('.form__input--elevation');
+const form = document.querySelector(".form");
+const containerWorkouts = document.querySelector(".workouts");
+const inputType = document.querySelector(".form__input--type");
+const inputDistance = document.querySelector(".form__input--distance");
+const inputDuration = document.querySelector(".form__input--duration");
+const inputCadence = document.querySelector(".form__input--cadence");
+const inputElevation = document.querySelector(".form__input--elevation");
 
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    position => {
-      const { latitude } = position.coords;
-      const { longitude } = position.coords;
-      console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+class App {
+  #map;
+  #mapEvent;
 
-      const coords = [latitude, longitude];
+  constructor() {
+    this._getPosition();
 
-      const map = L.map('map').setView(coords, 13);
+    form.addEventListener("submit", this._newWorkOut.bind(this));
 
-      L.tileLayer('https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(map);
+    inputType.addEventListener("change", this._toggleElevationField);
+  }
 
-      map.on('click', mapEvent => {
-        const { lat, lng } = mapEvent.latlng;
-        console.log(lat, lng);
-
-        L.marker([lat, lng])
-          .addTo(map)
-          .bindPopup(
-            L.popup({
-              maxWidth: 250,
-              autoClose: false,
-              closeOnClick: false,
-              className: 'running-popup',
-              content: 'Workout',
-            }),
-          )
-          .openPopup();
+  _getPosition() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), () => {
+        alert("Could not get your location");
       });
-    },
-    () => {
-      alert('Could not get your location');
-    },
-  );
+    }
+  }
+
+  _loadMap(position) {
+    const { latitude } = position.coords;
+    const { longitude } = position.coords;
+    const coords = [latitude, longitude];
+
+    this.#map = L.map("map").setView(coords, 13);
+
+    L.tileLayer("https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(this.#map);
+
+    // handling clicks on map
+    this.#map.on("click", this._showForm.bind(this));
+  }
+
+  _showForm(mapE) {
+    this.#mapEvent = mapE;
+    form.classList.remove("hidden");
+    inputDistance.focus();
+  }
+
+  _toggleElevationField() {
+    inputElevation.closest(".form__row").classList.toggle("form__row--hidden");
+    inputCadence.closest(".form__row").classList.toggle("form__row--hidden");
+  }
+
+  _newWorkOut(e) {
+    e.preventDefault();
+    console.log(this);
+
+    // clear input fields
+    inputDistance.textContent =
+      inputDuration.textContent =
+      inputCadence.textContent =
+      inputElevation.textContent =
+        "";
+
+    // Display marker
+    const { lat, lng } = this.#mapEvent.latlng;
+
+    L.marker([lat, lng])
+      .addTo(this.#map)
+      .bindPopup(
+        L.popup({
+          maxWidth: 250,
+          autoClose: false,
+          closeOnClick: false,
+          className: "running-popup",
+          content: "Workout",
+        }),
+      )
+      .openPopup();
+  }
 }
+
+const app = new App();
