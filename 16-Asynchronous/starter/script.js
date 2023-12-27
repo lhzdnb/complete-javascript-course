@@ -25,7 +25,10 @@ function renderCountry(data, className = '') {
   `;
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = '1';
+}
+
+function renderError(msg) {
+  countriesContainer.insertAdjacentHTML('beforeend', msg);
 }
 
 /*
@@ -74,9 +77,13 @@ function getCountryData(country) {
     .then(response => response.json())
     .then(data => {
       renderCountry(data[0], 'neighbour');
-    });
+    })
+    .catch(err =>
+      renderError(`Something went wrong: ${err.message}. Try again.`),
+    )
+    .finally(() => (countriesContainer.style.opacity = '1'));
 }
 
-btn.addEventListener('click', () => {});
-
-getCountryData('usa');
+btn.addEventListener('click', () => {
+  getCountryData('lhzdnb');
+});
