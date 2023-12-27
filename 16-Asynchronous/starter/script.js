@@ -64,17 +64,66 @@ function renderError(msg) {
  console.log(request);
  */
 
+/* function getJSON(url, errorMsg = 'Something went wrong') {
+ fetch(url).then(response => {
+ if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+ return response.json();
+ });
+ }
+ 
+ function getCountryData(country) {
+ fetch(`https://restcountries.com/v3.1/name/${country}`)
+ .then(response => {
+ console.log(response);
+ if (!response.ok)
+ throw new Error(`Country: ${country} not found (${response.status})`);
+ return response.json();
+ })
+ .then(data => {
+ renderCountry(data[0]);
+ const neighbour = data[0].borders[0];
+ if (!neighbour) return;
+ // Country 2
+ return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
+ })
+ .then(response => {
+ if (!response.ok)
+ throw new Error(`Country: ${country} not found (${response.status})`);
+ return response.json();
+ })
+ .then(data => {
+ renderCountry(data[0], 'neighbour');
+ })
+ .catch(err =>
+ renderError(`Something went wrong: ${err.message}. Try again.`),
+ )
+ .finally(() => (countriesContainer.style.opacity = '1'));
+ } */
+
+function getJSON(url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+
+    return response.json();
+  });
+}
+
 function getCountryData(country) {
-  fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(response => response.json())
+  getJSON(
+    `https://restcountries.com/v3.1/name/${country}`,
+    `Country: ${country} not found.`,
+  )
     .then(data => {
       renderCountry(data[0]);
-      const neighbour = data[0].borders[0];
-      if (!neighbour) return;
       // Country 2
-      return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
+      if (!data[0]?.borders) throw new Error('No neighbour found!');
+      const neighbour = data[0]?.borders[0];
+
+      return getJSON(
+        `https://restcountries.com/v3.1/alpha/${neighbour}`,
+        `Country: ${country} not found.`,
+      );
     })
-    .then(response => response.json())
     .then(data => {
       renderCountry(data[0], 'neighbour');
     })
@@ -85,5 +134,5 @@ function getCountryData(country) {
 }
 
 btn.addEventListener('click', () => {
-  getCountryData('lhzdnb');
+  getCountryData('taiwan');
 });
