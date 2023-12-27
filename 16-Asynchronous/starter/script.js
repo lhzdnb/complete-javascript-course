@@ -9,17 +9,17 @@ const countriesContainer = document.querySelector('.countries');
 function renderCountry(data, className = '') {
   const html = `
   <article class="country ${className}">
-    <img class="country__img" src="${data.flags.svg}" alt="${data.flags.alt}"/>
+  <img class="country__img" src="${data.flags.svg}" alt="${data.flags.alt}"/>
   <div class="country__data">
-  <h3 class="country__name">${data.name.common}</h3>
-  <h4 class="country__region">${data.region}</h4>
-  <p class="country__row"><span>👫</span>${(+data.population / 1000000).toFixed(
-    1,
-  )}M people</p>
-  <p class="country__row"><span>🗣️</span>${Object.values(data.languages)}</p>
-  <p class="country__row"><span>💰</span>${
-    Object.values(data.currencies)[0].name
-  }</p>
+    <h3 class="country__name">${data.name.common}</h3>
+    <h4 class="country__region">${data.region}</h4>
+    <p class="country__row"><span>👫</span>${(
+      +data.population / 1000000
+    ).toFixed(1)}M people</p>
+    <p class="country__row"><span>🗣️</span>${Object.values(data.languages)}</p>
+    <p class="country__row"><span>💰</span>${
+      Object.values(data.currencies)[0].name
+    }</p>
   </div>
   </article>
   `;
@@ -64,7 +64,19 @@ function renderCountry(data, className = '') {
 function getCountryData(country) {
   fetch(`https://restcountries.com/v3.1/name/${country}`)
     .then(response => response.json())
-    .then(data => renderCountry(data[0]));
+    .then(data => {
+      renderCountry(data[0]);
+      const neighbour = data[0].borders[0];
+      if (!neighbour) return;
+      // Country 2
+      return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
+    })
+    .then(response => response.json())
+    .then(data => {
+      renderCountry(data[0], 'neighbour');
+    });
 }
 
-getCountryData('taiwan');
+btn.addEventListener('click', () => {});
+
+getCountryData('usa');
