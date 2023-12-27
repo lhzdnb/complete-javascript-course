@@ -134,9 +134,9 @@ function getCountryData(country) {
     .finally(() => (countriesContainer.style.opacity = '1'));
 }
 
-btn.addEventListener('click', () => {
-  getCountryData('usa');
-});
+// btn.addEventListener('click', () => {
+//   getCountryData('usa');
+// });
 
 //////////////////////////////////////////////////
 // Coding Challenge #1
@@ -208,43 +208,100 @@ btn.addEventListener('click', () => {
 // resolved promise 1
 // 0 sec timer
 
-const lotteryPromise = new Promise((resolve, reject) => {
-  console.log('Lottery draw is happening');
-  setTimeout(() => {
-    if (Math.random() >= 0.5) {
-      resolve('You win');
-    } else {
-      reject(new Error('You lose'));
-    }
-  }, 2000);
-});
+/*
+ const lotteryPromise = new Promise((resolve, reject) => {
+ console.log('Lottery draw is happening');
+ setTimeout(() => {
+ if (Math.random() >= 0.5) {
+ resolve('You win');
+ } else {
+ reject(new Error('You lose'));
+ }
+ }, 2000);
+ });
+ 
+ lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+ 
+ // Promisifying setTimeout
+ function wait(seconds) {
+ return new Promise(resolve => {
+ setTimeout(resolve, seconds * 1000);
+ });
+ }
+ 
+ wait(2)
+ .then(() => {
+ console.log('1 sec');
+ return wait(1);
+ })
+ .then(() => {
+ console.log('2 sec');
+ return wait(1);
+ })
+ .then(() => {
+ console.log('3 sec');
+ return wait(1);
+ })
+ .then(() => {
+ console.log('4 sec');
+ return wait(1);
+ });
+ 
+ Promise.resolve('abc').then(x => console.log(x));
+ Promise.reject('abc').catch(err => console.error(err));
+ */
 
-lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
-
-// Promisifying setTimeout
-function wait(seconds) {
-  return new Promise(resolve => {
-    setTimeout(resolve, seconds * 1000);
-  });
-}
-
-wait(2)
-  .then(() => {
-    console.log('1 sec');
-    return wait(1);
-  })
-  .then(() => {
-    console.log('2 sec');
-    return wait(1);
-  })
-  .then(() => {
-    console.log('3 sec');
-    return wait(1);
-  })
-  .then(() => {
-    console.log('4 sec');
-    return wait(1);
-  });
-
-Promise.resolve('abc').then(x => console.log(x));
-Promise.reject('abc').catch(err => console.error(err));
+/*
+ navigator.geolocation.getCurrentPosition(
+ position => {
+ console.log(position);
+ },
+ err => {
+ console.error(err.message);
+ },
+ );
+ 
+ function getPosition() {
+ return new Promise((resolve, reject) => {
+ navigator.geolocation.getCurrentPosition(resolve, reject);
+ });
+ }
+ 
+ getPosition()
+ .then(res => console.log(res))
+ .catch(err => console.error(err.message));
+ 
+ function whereAmI(lat, lng) {
+ fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+ .then(response => {
+ if (!response.ok)
+ throw new Error(`Problem with geocoding ${response.status}`);
+ return response.json();
+ })
+ .then(data => {
+ const { city, country } = data;
+ if (city === 'Throttled! See geocode.xyz/pricing')
+ throw new Error(
+ 'You can send at most 1 requests per second. Try again later!',
+ );
+ console.log(`You are in ${city}, ${country}`);
+ return fetch(`https://restcountries.com/v3.1/name/${country}`);
+ })
+ .then(response => {
+ if (!response.ok)
+ throw new Error(`Country not found (${response.status}`);
+ return response.json();
+ })
+ .then(data => renderCountry(data[0]))
+ .catch(err => {
+ console.error(`Something went wrong: ${err.message}.`);
+ })
+ .finally(() => (countriesContainer.style.opacity = '1'));
+ }
+ 
+ btn.addEventListener('click', () => {
+ getPosition().then(position =>
+ whereAmI(position.coords.latitude, position.coords.longitude),
+ );
+ });
+ */
