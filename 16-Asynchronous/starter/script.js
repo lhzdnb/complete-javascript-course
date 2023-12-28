@@ -440,23 +440,83 @@ function getCountryData(country) {
  //   alert(err.message);
  // }
  */
-
-async function get3Countries(c1, c2, c3) {
-  try {
-    // const [data1] = await
-    // getJSON(`https://restcountries.com/v3.1/name/${c1}`); const [data2] =
-    // await getJSON(`https://restcountries.com/v3.1/name/${c2}`); const
-    // [data3] = await getJSON(`https://restcountries.com/v3.1/name/${c3}`);
-
-    const data = await Promise.all([
-      getJSON(`https://restcountries.com/v3.1/name/${c1}`),
-      getJSON(`https://restcountries.com/v3.1/name/${c2}`),
-      getJSON(`https://restcountries.com/v3.1/name/${c3}`),
-    ]);
-    console.log(data.map(country => country[0].capital));
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-get3Countries('usa', 'canada', 'tanzania');
+/*
+ ///////////////////////////////////////////////
+ // running promises in parallel
+ async function get3Countries(c1, c2, c3) {
+ try {
+ // const [data1] = await
+ // getJSON(`https://restcountries.com/v3.1/name/${c1}`); const [data2] =
+ // await getJSON(`https://restcountries.com/v3.1/name/${c2}`); const
+ // [data3] = await getJSON(`https://restcountries.com/v3.1/name/${c3}`);
+ 
+ const data = await Promise.all([
+ getJSON(`https://restcountries.com/v3.1/name/${c1}`),
+ getJSON(`https://restcountries.com/v3.1/name/${c2}`),
+ getJSON(`https://restcountries.com/v3.1/name/${c3}`),
+ ]);
+ console.log(data.map(country => country[0].capital));
+ } catch (err) {
+ console.error(err);
+ }
+ }
+ 
+ get3Countries('usa', 'canada', 'tanzania');
+ */
+/*
+ ///////////////////////////////////////////
+ // Other Promise Combinators: race, allSettled and any
+ // promise.race
+ (async function () {
+ const res = await Promise.race([
+ getJSON(`https://restcountries.com/v3.1/name/italy`),
+ getJSON(`https://restcountries.com/v3.1/name/egypt`),
+ getJSON(`https://restcountries.com/v3.1/name/mexico`),
+ ]);
+ console.log(res[0]);
+ })();
+ 
+ function timeout(sec) {
+ return new Promise(function (_, reject) {
+ setTimeout(() => {
+ reject(new Error(`Request took too long`));
+ }, 0.1 * 1000);
+ });
+ }
+ 
+ Promise.race([
+ getJSON(`https://restcountries.com/v3.1/name/tanzania`),
+ timeout(1),
+ ])
+ .then(res => console.log(res[0]))
+ .catch(err => console.error(err));
+ 
+ // Promise.allSettled
+ Promise.allSettled([
+ Promise.resolve('Success'),
+ Promise.reject('ERROR'),
+ Promise.resolve('Another success'),
+ ]).then(res => console.log(res));
+ 
+ Promise.all([
+ Promise.resolve('Success'),
+ Promise.reject('ERROR'),
+ Promise.resolve('Another success'),
+ ])
+ .then(res => console.log(res))
+ .catch(err => console.error(err));
+ 
+ // Promise.any
+ Promise.any([
+ Promise.resolve('Success'),
+ Promise.reject('ERROR'),
+ Promise.resolve('Another success'),
+ ]).then(res => console.log(res));
+ Promise.any([
+ Promise.reject('Success'),
+ Promise.reject('ERROR'),
+ Promise.reject('Another success'),
+ ])
+ .then(res => console.log(res))
+ .catch(err => console.error(err.message));
+ */
