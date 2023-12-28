@@ -560,7 +560,7 @@ async function loadPause(count) {
   }
 }
 
-// loadPause(3).then(res => console.log(res));
+loadPause(3).then(res => console.log(res));
 
 async function loadAll(imgArr) {
   try {
@@ -578,4 +578,5 @@ const allImgs = [];
 for (let i = 0; i < 3; i++) {
   allImgs.push(`./img/img-${i + 1}.jpg`);
 }
-loadAll(allImgs);
+
+setTimeout(() => loadAll(allImgs), 7000);
