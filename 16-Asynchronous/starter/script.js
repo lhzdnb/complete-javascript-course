@@ -1,3 +1,5 @@
+// noinspection LanguageDetectionInspection
+
 'use strict';
 
 const btn = document.querySelector('.btn-country');
@@ -308,64 +310,94 @@ function getCountryData(country) {
 
 //////////////////////////////////////
 // Coding challenge # 2
-function createImage(imgPath) {
+/*
+ function createImage(imgPath) {
+ return new Promise((resolve, reject) => {
+ const img = document.createElement('img');
+ img.src = imgPath;
+ 
+ img.addEventListener('load', () => {
+ document.querySelector('.images').append(img);
+ resolve(img);
+ });
+ 
+ img.addEventListener('error', () =>
+ reject(new Error('Failed to load image at path ' + imgPath)),
+ );
+ });
+ }
+ 
+ function wait(seconds) {
+ return new Promise(resolve => {
+ setTimeout(() => resolve(`Wait for ${seconds} seconds!`), seconds * 1000);
+ });
+ }
+ 
+ let currentImg;
+ 
+ // 使用 createImage 函数加载第一张图片，该函数返回一个 Promise 对象
+ createImage('./img/img-1.jpg')
+ // 当第一张图片加载完成后，将其赋值给 currentImg，并在控制台打印消息
+ .then(img => {
+ currentImg = img;
+ console.log('First img loaded');
+ // 返回一个新的 Promise 对象，该对象在 2 秒后解析。这提供了一个延时效果。
+ return new Promise(resolve => setTimeout(resolve, 2000));
+ })
+ // 当上述 Promise 对象解析后，将 currentImg 的 display 属性设置为 'none'，即隐藏该图片
+ // 然后加载第二张图片
+ .then(() => {
+ currentImg.style.display = 'none';
+ return createImage('./img/img-2.jpg');
+ })
+ // 当第二张图片加载完成后，将其赋值给 currentImg，并在控制台打印消息
+ .then(img => {
+ currentImg = img;
+ console.log('Second img loaded');
+ // 返回一个新的 Promise 对象，该对象在 2 秒后解析。这提供了一个延时效果。
+ return new Promise(resolve => setTimeout(resolve, 2000));
+ })
+ // 当上述 Promise 对象解析后，将 currentImg 的 display 属性设置为 'none'，即隐藏该图片
+ // 然后加载第三张图片
+ .then(() => {
+ currentImg.style.display = 'none';
+ return createImage('./img/img-3.jpg');
+ })
+ // 当第三张图片加载完成后，将其赋值给 currentImg，并在控制台打印消息
+ .then(img => {
+ currentImg = img;
+ console.log('Third img loaded');
+ // 返回一个新的 Promise 对象，该对象在 2 秒后解析。这提供了一个延时效果。
+ return new Promise(resolve => setTimeout(resolve, 2000));
+ })
+ // 当上述 Promise 对象解析后，将 currentImg 的 display 属性设置为 'none'，即隐藏该图片
+ .then(res => (currentImg.style.display = 'none'));
+ */
+
+function getPosition() {
   return new Promise((resolve, reject) => {
-    const img = document.createElement('img');
-    img.src = imgPath;
-
-    img.addEventListener('load', () => {
-      document.querySelector('.images').append(img);
-      resolve(img);
-    });
-
-    img.addEventListener('error', () =>
-      reject(new Error('Failed to load image at path ' + imgPath)),
-    );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 }
 
-function wait(seconds) {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(`Wait for ${seconds} seconds!`), seconds * 1000);
-  });
+async function whereAmI(country) {
+  // Geolocation
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+
+  // Reverse geocoding
+  const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+  const dataGeo = await resGeo.json();
+  console.log(dataGeo);
+
+  // Country data
+  const res = await fetch(
+    `https://restcountries.com/v3.1/name/${dataGeo.country}`,
+  );
+  const [data] = await res.json();
+  renderCountry(data);
+  countriesContainer.style.opacity = '1';
 }
 
-let currentImg;
-
-// 使用 createImage 函数加载第一张图片，该函数返回一个 Promise 对象
-createImage('./img/img-1.jpg')
-  // 当第一张图片加载完成后，将其赋值给 currentImg，并在控制台打印消息
-  .then(img => {
-    currentImg = img;
-    console.log('First img loaded');
-    // 返回一个新的 Promise 对象，该对象在 2 秒后解析。这提供了一个延时效果。
-    return new Promise(resolve => setTimeout(resolve, 2000));
-  })
-  // 当上述 Promise 对象解析后，将 currentImg 的 display 属性设置为 'none'，即隐藏该图片
-  // 然后加载第二张图片
-  .then(() => {
-    currentImg.style.display = 'none';
-    return createImage('./img/img-2.jpg');
-  })
-  // 当第二张图片加载完成后，将其赋值给 currentImg，并在控制台打印消息
-  .then(img => {
-    currentImg = img;
-    console.log('Second img loaded');
-    // 返回一个新的 Promise 对象，该对象在 2 秒后解析。这提供了一个延时效果。
-    return new Promise(resolve => setTimeout(resolve, 2000));
-  })
-  // 当上述 Promise 对象解析后，将 currentImg 的 display 属性设置为 'none'，即隐藏该图片
-  // 然后加载第三张图片
-  .then(() => {
-    currentImg.style.display = 'none';
-    return createImage('./img/img-3.jpg');
-  })
-  // 当第三张图片加载完成后，将其赋值给 currentImg，并在控制台打印消息
-  .then(img => {
-    currentImg = img;
-    console.log('Third img loaded');
-    // 返回一个新的 Promise 对象，该对象在 2 秒后解析。这提供了一个延时效果。
-    return new Promise(resolve => setTimeout(resolve, 2000));
-  })
-  // 当上述 Promise 对象解析后，将 currentImg 的 display 属性设置为 'none'，即隐藏该图片
-  .then(res => (currentImg.style.display = 'none'));
+whereAmI('portugal');
+console.log('FIRST');

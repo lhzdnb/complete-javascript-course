@@ -8,7 +8,7 @@
 
 ### 工作流程
 
-1. **Promise创建和执行**：当一个Promise被创建并执行时（例如进行某个异步操作），它开始时处于`Pending`状态。此时，与Promise相关的代码继续执行，但`then`、`catch`、`finally`中的回调不会立即执行。
+1. **Promise创建和执行**：当一个Promise被创建并执行时（例如进行某个异步操作），它开始时处于 `Pending` 状态。此时，与Promise相关的代码继续执行，但`then`、`catch`、`finally`中的回调不会立即执行。
 
 2. **调用resolve/reject**：一旦异步操作完成（成功或失败），`resolve`或`reject`会被调用。这会将Promise的状态改变为`Fulfilled`或`Rejected`。
 
