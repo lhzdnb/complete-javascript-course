@@ -116,7 +116,6 @@ function getCountryData(country) {
     `Country: ${country} not found.`,
   )
     .then(data => {
-      console.log(data);
       renderCountry(data[0]);
       // Country 2
       if (!data[0]?.borders) throw new Error('No neighbour found!');
@@ -390,27 +389,45 @@ async function whereAmI(country) {
     const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
     if (!resGeo.ok) throw new Error('Problem getting country');
     const dataGeo = await resGeo.json();
-    console.log(dataGeo);
-
     // Country data
     const res = await fetch(
       `https://restcountries.com/v3.1/name/${dataGeo.country}`,
     );
-    if (!resGeo.ok) throw new Error('Problem getting country');
+    if (!res.ok) throw new Error('Problem getting country');
 
     const [data] = await res.json();
     renderCountry(data);
     countriesContainer.style.opacity = '1';
+
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
   } catch (err) {
     console.error(err);
     renderError(`${err.message}.`);
+
+    // Reject promise returned from async function
+    throw err;
   }
 }
 
-whereAmI();
-whereAmI();
-whereAmI();
-console.log('FIRST');
+console.log('1: Will get location');
+// // const city = whereAmI();
+// // console.log(city);
+// whereAmI()
+//   .then(city => console.log(city))
+//   .catch(err => console.error(`2: ${err.message}`))
+//   .finally(() => {
+//     console.log('3. Finished getting location');
+//   });
+
+(async function () {
+  try {
+    const res = await whereAmI();
+    console.log('2: ' + res);
+  } catch (err) {
+    console.error('2: ' + err.message);
+  }
+  console.log('3: Finished getting location');
+})();
 
 // try {
 //   let y = 1;
