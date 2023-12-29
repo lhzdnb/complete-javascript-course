@@ -47,3 +47,62 @@ console.log("代码执行结束");
 在这个流程中，`then`的回调是作为微任务被处理的，确保在当前执行栈完成后、新的事件循环开始前执行。这就是为什么我们通常看到Promise的回调似乎总是在同步代码执行完毕后才运行。
 
 ![asynchronous](./assets/asynchronous.png)![promise](./assets/promise.png)
+
+要理解这段代码的输出顺序，我们需要深入了解 JavaScript 的事件循环（Event Loop）和任务队列（Task Queue）的概念，以及微任务（microtasks）和宏任务（macrotasks）的区别。
+
+### JavaScript的事件循环和任务队列
+JavaScript 在浏览器环境中是单线程执行的，这意味着它一次只能执行一个任务。为了处理异步操作（如定时器、HTTP请求等），JavaScript 使用了事件循环和任务队列的机制。
+
+- **事件循环（Event Loop）**：负责不断地检查主调用栈（call stack）是否为空，如果为空，它会查看任务队列是否有等待的任务需要执行。
+- **任务队列（Task Queue）**：存放准备好被执行的回调函数。这里的任务分为两类：宏任务（macrotasks）和微任务（microtasks）。
+
+### 宏任务和微任务
+- **宏任务（Macrotasks）**：包括整体的脚本代码、`setTimeout`、`setInterval`、I/O、UI渲染等。
+- **微任务（Microtasks）**：包括`Promise.then()`、`MutationObserver`、`process.nextTick`（在Node.js中）等。微任务的优先级高于宏任务。
+
+### 执行顺序规则
+1. 执行同步代码，这属于宏任务。
+2. 执行完所有同步代码后，执行当前宏任务中所有的微任务。
+3. 当所有微任务完成后，如果有必要，进行UI渲染。
+4. 然后开始下一个宏任务（如由`setTimeout`等设置的），重复上述步骤。
+
+### 分析给定的代码
+根据上述规则，我们来逐步分析你的代码：
+
+1. **同步代码执行**：
+    
+    - 执行 `console.log('Test start')`。
+    - 设置一个 `setTimeout`，它被放入宏任务队列。
+    - 执行两个 `Promise.resolve`，它们的 `then` 部分被放入微任务队列。
+    - 执行 `console.log('Test end')`。
+   
+   **当前输出**：
+    ```
+    Test start
+    Test end
+     ```
+    
+2. **执行微任务**：
+    
+    - 执行 `Promise.resolve('Resolved promise 1').then(...)` 的回调，输出 `'Resolved promise 1'`。
+    - 执行 `Promise.resolve('Resolved promise 2').then(...)` 的回调。即使这里有一个循环，但它是同步执行的，所以在输出 `'Resolved promise 2'` 前，会先完成循环。
+   
+   **当前输出**：
+    ```
+    Test start
+    Test end
+    Resolved promise 1
+    Resolved promise 2
+     ```
+    
+3. **执行宏任务**：
+    - 执行 `setTimeout(..., 0)` 的回调，输出 `'0 sec timer'`。
+
+   **最终输出**：
+    ```
+    Test start
+    Test end
+    Resolved promise 1
+    Resolved promise 2
+    0 sec timer
+    ```
