@@ -1,32 +1,84 @@
+// Exporting module
+// import { addToCart, totalPrice as price, tq } from "./shoppingCart.js";
+
+// addToCart("bread", 5);
+// console.log(tq, price);
+
+console.log("Importing module");
+
+// import * as ShoppingCart from "./shoppingCart.js";
+// import add from "./shoppingCart.js";
+//
+// ShoppingCart.addToCart("bread", 5);
+// console.log(ShoppingCart.totalPrice);
+
+import add, {cart} from './shoppingCart.js';
 /*
- // Exporting module
- // import { addToCart, totalPrice as price, tq } from "./shoppingCart.js";
+ //////////////////////////////////////////
+ // The module pattern
+ const ShoppingCart2 = (function () {
+ const cart = [];
+ const shippingCost = 10;
+ const totalPrice = 237;
+ const totalQuantity = 23;
  
- // addToCart("bread", 5);
- // console.log(tq, price);
+ function addToCart(product, quantity) {
+ cart.push({ product, quantity });
+ console.log(
+ `${quantity} ${product} added to cart. Shipping cost is ${shippingCost}`,
+ );
+ }
  
- console.log("Importing module");
+ function orderStock(product, quantity) {
+ console.log(`${quantity} ${product} ordered from supplier`);
+ }
  
- // import * as ShoppingCart from "./shoppingCart.js";
- // import add from "./shoppingCart.js";
- //
- // ShoppingCart.addToCart("bread", 5);
- // console.log(ShoppingCart.totalPrice);
+ return {
+ addToCart,
+ cart,
+ totalPrice,
+ totalQuantity,
+ };
+ })();
  
- import add, { cart } from "./shoppingCart.js";
+ ShoppingCart2.addToCart("apple", 4);
+ ShoppingCart2.addToCart("pizza", 2);
+ console.log(ShoppingCart2);
+ console.log(ShoppingCart2.shippingCost);
+ */
+import cloneDeep from 'lodash-es';
+import 'core-js/stable';
+import 'core-js/stable/array/find';
+//////////////////////////////
+// CommonJS modules
+// Export
+/*
+ export.addToCart = function(product, quantity) {
+ cart.push({ product, quantity });
+ console.log(
+ `${quantity} ${product} added to cart. Shipping cost is ${shippingCost}`,
+ );
+ }
  
- add("pizza", 2);
- add("bread", 5);
- add("apples", 4);
- 
- console.log(cart);
- 
- // console.log("Start fetching");
- // const res = await fetch("https://jsonplaceholder.typicode.com/posts");
- // const data = await res.json();
- // console.log(data);
- //
- // console.log("Something");
+ // Import
+ const {addToCart} = require('./shoppingCart.js');
+ */
+
+// import cloneDeep from "./node_modules/lodash-es/cloneDeep.js";
+
+add("pizza", 2);
+add("bread", 5);
+add("apples", 4);
+
+console.log(cart);
+
+// console.log("Start fetching");
+// const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+// const data = await res.json();
+// console.log(data);
+//
+// console.log("Something");
+/*
  
  async function getLastPost() {
  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
@@ -47,47 +99,37 @@
  console.log(lastPost);
  */
 
-/*
-const ShoppingCart2 = (function () {
-  const cart = [];
-  const shippingCost = 10;
-  const totalPrice = 237;
-  const totalQuantity = 23;
+const state = {
+  cart: [
+    { product: "bread", quantity: 5 },
+    { product: "pizza", quantity: 2 },
+  ],
+  user: { loggedIn: true },
+};
 
-  function addToCart(product, quantity) {
-    cart.push({ product, quantity });
-    console.log(
-      `${quantity} ${product} added to cart. Shipping cost is ${shippingCost}`,
-    );
-  }
+// const stateClone = Object.assign({}, state);
+// state.user.loggedIn = false;
+// console.log(stateClone);
 
-  function orderStock(product, quantity) {
-    console.log(`${quantity} ${product} ordered from supplier`);
-  }
+const stateDeepClone = cloneDeep(state);
+state.user.loggedIn = false;
+console.log(stateDeepClone);
 
-  return {
-    addToCart,
-    cart,
-    totalPrice,
-    totalQuantity,
-  };
-})();
-
-ShoppingCart2.addToCart("apple", 4);
-ShoppingCart2.addToCart("pizza", 2);
-console.log(ShoppingCart2);
-console.log(ShoppingCart2.shippingCost);
-*/
-
-//////////////////////////////
-// CommonJS modules
-// Export
-export.addToCart = function(product, quantity) {
-  cart.push({ product, quantity });
-  console.log(
-      `${quantity} ${product} added to cart. Shipping cost is ${shippingCost}`,
-  );
+if (module.hot) {
+  module.hot.accept();
 }
 
-// Import
-const {addToCart} = require('./shoppingCart.js');
+class Person {
+  #greeting = "Hey";
+
+  constructor(name) {
+    this.name = name;
+    console.log(`${this.#greeting}, ${this.name}`);
+  }
+}
+
+const lh = new Person("lhzdnb");
+console.log(lh);
+
+console.log(cart.find((el) => el.quantity >= 2));
+Promise.resolve("TEST").then((x) => console.log(x));

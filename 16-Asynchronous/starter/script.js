@@ -522,61 +522,72 @@ function getCountryData(country) {
  .catch(err => console.error(err.message));
  */
 
-function createImage(imgPath) {
-  return new Promise((resolve, reject) => {
-    const imgElement = document.createElement('img');
-    imgElement.src = imgPath;
-    const imgContainer = document.querySelector('.images');
+/*
+ function createImage(imgPath) {
+ return new Promise((resolve, reject) => {
+ const imgElement = document.createElement('img');
+ imgElement.src = imgPath;
+ const imgContainer = document.querySelector('.images');
+ 
+ imgElement.addEventListener('load', () => {
+ imgContainer.append(imgElement);
+ resolve(imgElement);
+ });
+ 
+ imgElement.addEventListener('error', () => {
+ reject(`Failed to load the image at: ${imgPath}.`);
+ });
+ });
+ }
+ 
+ function wait(sec) {
+ return new Promise(resolve => {
+ setTimeout(resolve, 1000 * sec);
+ });
+ }
+ 
+ async function loadPause(count) {
+ try {
+ let currentImg;
+ for (let i = 1; i <= count; i++) {
+ currentImg = await createImage(`./img/img-${i}.jpg`);
+ console.log(`Image ${i} loaded`);
+ await wait(2);
+ currentImg.style.display = 'none';
+ }
+ return 'All images have been loaded without error!';
+ } catch (err) {
+ throw err;
+ }
+ }
+ 
+ loadPause(3).then(res => console.log(res));
+ 
+ async function loadAll(imgArr) {
+ try {
+ const imgs = imgArr.map(async img => await createImage(img));
+ console.log(imgs);
+ const imgsEl = await Promise.all(imgs);
+ console.log(imgsEl);
+ imgsEl.forEach(img => img.classList.add('parallel'));
+ } catch (err) {
+ console.error(err);
+ }
+ }
+ 
+ const allImgs = [];
+ for (let i = 0; i < 3; i++) {
+ allImgs.push(`./img/img-${i + 1}.jpg`);
+ }
+ 
+ setTimeout(() => loadAll(allImgs), 7000);
+ */
 
-    imgElement.addEventListener('load', () => {
-      imgContainer.append(imgElement);
-      resolve(imgElement);
-    });
-
-    imgElement.addEventListener('error', () => {
-      reject(`Failed to load the image at: ${imgPath}.`);
-    });
-  });
-}
-
-function wait(sec) {
-  return new Promise(resolve => {
-    setTimeout(resolve, 1000 * sec);
-  });
-}
-
-async function loadPause(count) {
-  try {
-    let currentImg;
-    for (let i = 1; i <= count; i++) {
-      currentImg = await createImage(`./img/img-${i}.jpg`);
-      console.log(`Image ${i} loaded`);
-      await wait(2);
-      currentImg.style.display = 'none';
-    }
-    return 'All images have been loaded without error!';
-  } catch (err) {
-    throw err;
-  }
-}
-
-loadPause(3).then(res => console.log(res));
-
-async function loadAll(imgArr) {
-  try {
-    const imgs = imgArr.map(async img => await createImage(img));
-    console.log(imgs);
-    const imgsEl = await Promise.all(imgs);
-    console.log(imgsEl);
-    imgsEl.forEach(img => img.classList.add('parallel'));
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-const allImgs = [];
-for (let i = 0; i < 3; i++) {
-  allImgs.push(`./img/img-${i + 1}.jpg`);
-}
-
-setTimeout(() => loadAll(allImgs), 7000);
+console.log('Test start');
+setTimeout(() => console.log('0 sec timer'), 0);
+Promise.resolve('Resolved promise 1').then(res => console.log(res));
+Promise.resolve('Resolved promise 2').then(res => {
+  for (let i = 0; i < 1000000000; i++) {}
+  console.log(res);
+});
+console.log('Test end');
