@@ -31,12 +31,12 @@ export default class View {
       // Updates changed TEXT
       if (
         !newEl.isEqualNode(curEl) &&
-        newEl?.firstChild.nodeValue.trim() !== ''
+        newEl?.firstChild?.nodeValue.trim() !== ''
       ) {
         curEl.textContent = newEl.textContent;
       }
 
-      // Updates changed ATTRI BUTES
+      // Updates changed ATTRIBUTES
       if (!newEl.isEqualNode(curEl)) {
         Array.from(newEl.attributes).forEach(attr =>
           curEl.setAttribute(attr.name, attr.value),
