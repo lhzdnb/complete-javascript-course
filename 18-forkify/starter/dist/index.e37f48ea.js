@@ -2126,38 +2126,7 @@ parcelHelpers.defineInteropFlag(exports);
  *     response.
  * @throws {Error} - An error that occurs during the fetch or if the response
  *     is not ok.
- */ parcelHelpers.export(exports, "AJAX", ()=>AJAX) /*
- export async function getJSON(url) {
- try {
- const res = await Promise.race([fetch(url), timeout(TIMEOUT_SEC)]);
- const data = await res.json();
- 
- if (!res.ok) throw new Error(`${data.message} (${res.status})`);
- return data;
- } catch (e) {
- throw e;
- }
- }
- 
- export async function sendJSON(url, uploadData) {
- try {
- const fetchPro = fetch(url, {
- method: 'POST',
- headers: {
- 'Content-Type': 'application/json',
- },
- body: JSON.stringify(uploadData),
- });
- const res = await Promise.race([fetchPro, timeout(TIMEOUT_SEC)]);
- const data = await res.json();
- 
- if (!res.ok) throw new Error(`${data.message} (${res.status})`);
- return data;
- } catch (err) {
- throw err;
- }
- }
- */ ;
+ */ parcelHelpers.export(exports, "AJAX", ()=>AJAX);
 var _configJs = require("./config.js");
 /**
  * Returns a promise that rejects after a specified timeout.
