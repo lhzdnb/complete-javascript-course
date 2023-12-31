@@ -6,7 +6,6 @@ import paginationView from './views/paginationView.js';
 import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
 import { MODAL_CLOSE_SEC } from './config.js';
-import renderFormView from './views/renderFormView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime.js';
@@ -30,7 +29,6 @@ async function controlRecipe() {
     await model.loadRecipe(id);
     // 2) Rendering recipe
     recipeView.render(model.state.recipe);
-    console.log(model.state.recipe);
   } catch (error) {
     recipeView.renderError();
     console.error(error);
@@ -104,19 +102,10 @@ async function controlAddRecipe(newRecipe) {
     // Success message
     addRecipeView.renderMessage();
 
-    // Render bookmark view
-    bookmarksView.render(model.state.bookmarks);
-
-    // Change ID in URL
-    window.history.pushState(null, '', `#${model.state.recipe.id}`);
-
     // Close form
     setTimeout(() => {
-      addRecipeView.hideWindow();
-      renderFormView.renderForm();
+      addRecipeView.toggleWindow();
     }, MODAL_CLOSE_SEC * 1000);
-
-    // Rerender the form
   } catch (err) {
     console.error(err);
     addRecipeView.renderError(err.message);

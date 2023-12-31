@@ -16,12 +16,12 @@ class AddRecipeView extends View {
   }
 
   _addHandlerShowWindow() {
-    this._btnOpen.addEventListener('click', this.showWindow.bind(this));
+    this._btnOpen.addEventListener('click', this.toggleWindow.bind(this));
   }
 
   _addHandlerHideWindow() {
-    this._btnClose.addEventListener('click', this.hideWindow.bind(this));
-    this._overlay.addEventListener('click', this.hideWindow.bind(this));
+    this._btnClose.addEventListener('click', this.toggleWindow.bind(this));
+    this._overlay.addEventListener('click', this.toggleWindow.bind(this));
   }
 
   addHandlerUpload(handler) {
@@ -33,14 +33,9 @@ class AddRecipeView extends View {
     });
   }
 
-  showWindow() {
-    this._overlay.classList.remove('hidden');
-    this._window.classList.remove('hidden');
-  }
-
-  hideWindow() {
-    this._overlay.classList.add('hidden');
-    this._window.classList.add('hidden');
+  toggleWindow() {
+    this._overlay.classList.toggle('hidden');
+    this._window.classList.toggle('hidden');
   }
 
   _generateMarkup() {}
