@@ -1,9 +1,17 @@
 import View from './View.js';
 import icons from 'url:../../img/icons.svg';
 
+/**
+ * Class representing a view for rendering pagination.
+ * @extends View
+ */
 class PaginationView extends View {
   _parentElement = document.querySelector('.pagination');
 
+  /**
+   * Add an event handler for clicking on the pagination buttons.
+   * @param {Function} handler - The event handler function.
+   */
   addHandlerClick(handler) {
     this._parentElement.addEventListener('click', e => {
       const btn = e.target.closest('.btn--inline');
@@ -13,6 +21,10 @@ class PaginationView extends View {
     });
   }
 
+  /**
+   * Generate the markup for the pagination view.
+   * @returns {string} - The generated markup.
+   */
   _generateMarkup() {
     const numPages = Math.ceil(
       this._data.results.length / this._data.resultsPerPage,
@@ -29,6 +41,10 @@ class PaginationView extends View {
     else return '';
   }
 
+  /**
+   * Generate the markup for the previous page button.
+   * @returns {string} - The generated markup.
+   */
   _preButton() {
     return `
     <button data-goto="${
@@ -42,6 +58,10 @@ class PaginationView extends View {
     `;
   }
 
+  /**
+   * Generate the markup for the next page button.
+   * @returns {string} - The generated markup.
+   */
   _nextButton() {
     return `
     <button data-goto="${
@@ -56,4 +76,5 @@ class PaginationView extends View {
   }
 }
 
+// Export an instance of PaginationView
 export default new PaginationView();

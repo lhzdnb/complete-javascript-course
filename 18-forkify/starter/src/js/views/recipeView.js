@@ -2,17 +2,29 @@ import icons from 'url:../../img/icons.svg';
 import { Fraction } from 'fractional';
 import View from './View.js';
 
+/**
+ * Class representing a view for rendering a recipe.
+ * @extends View
+ */
 class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _errorMessage = 'We could not find that recipe. Please try another one';
   _message = '';
 
+  /**
+   * Add event handlers for rendering the recipe view.
+   * @param {Function} handler - The event handler function.
+   */
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(event =>
       window.addEventListener(event, handler),
     );
   }
 
+  /**
+   * Add event handlers for updating the servings of the recipe.
+   * @param {Function} handler - The event handler function.
+   */
   addHandlerUpdateServings(handler) {
     this._parentElement.addEventListener('click', e => {
       const btn = e.target.closest('.btn--tiny');
@@ -22,6 +34,10 @@ class RecipeView extends View {
     });
   }
 
+  /**
+   * Add event handlers for bookmarking the recipe.
+   * @param {Function} handler - The event handler function.
+   */
   addHandlerBookmark(handler) {
     this._parentElement.addEventListener('click', e => {
       const btn = e.target.closest('.btn--bookmark');
@@ -30,6 +46,10 @@ class RecipeView extends View {
     });
   }
 
+  /**
+   * Generate the markup for the recipe view.
+   * @returns {string} - The generated markup.
+   */
   _generateMarkup() {
     return `
     <figure class="recipe__fig">
@@ -122,6 +142,11 @@ class RecipeView extends View {
     `;
   }
 
+  /**
+   * Generate the markup for a single ingredient.
+   * @param {Object} ingredient - The ingredient to generate markup for.
+   * @returns {string} - The generated markup.
+   */
   renderMarkupIngredient(ingredient) {
     return `
         <li class="recipe__ingredient">
