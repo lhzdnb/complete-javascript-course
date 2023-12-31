@@ -1,9 +1,16 @@
 import View from './View.js';
 import icons from 'url:../../img/icons.svg';
 
+/**
+ * Class representing a form view for rendering a recipe.
+ * @extends View
+ */
 class RenderFormView extends View {
   _parentElement = document.querySelector('.upload');
 
+  /**
+   * Render the form for adding a new recipe.
+   */
   renderForm() {
     this._clear();
 
@@ -23,7 +30,7 @@ class RenderFormView extends View {
         <label>Servings</label>
         <input value="23" required name="servings" type="number" />
       </div>
-      
+
       <div class="upload__column">
         <h3 class="upload__heading">Ingredients</h3>
         <label>Ingredient 1</label>
@@ -67,7 +74,7 @@ class RenderFormView extends View {
           placeholder="Format: 'Quantity,Unit,Description'"
         />
       </div>
-      
+
       <button class="btn upload__btn">
         <svg>
           <use href="${icons}#icon-upload-cloud"></use>
@@ -76,8 +83,10 @@ class RenderFormView extends View {
       </button>
     `;
 
+    // Insert the form HTML into the parent element
     this._parentElement.insertAdjacentHTML('afterbegin', html);
   }
 }
 
+// Export an instance of RenderFormView
 export default new RenderFormView();

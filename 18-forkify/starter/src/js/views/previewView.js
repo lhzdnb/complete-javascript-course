@@ -1,9 +1,17 @@
 import View from './View.js';
 import icons from 'url:../../img/icons.svg';
 
+/**
+ * Class representing a view for rendering a preview of a recipe.
+ * @extends View
+ */
 class PreviewView extends View {
   _parentElement = '';
 
+  /**
+   * Class representing a view for rendering a recipe.
+   * @extends View
+   */
   _generateMarkup() {
     const id = window.location.hash.slice(1);
 

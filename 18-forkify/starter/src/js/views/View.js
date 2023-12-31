@@ -1,10 +1,22 @@
 import icons from 'url:../../img/icons.svg';
 
+/**
+ * This is a base class for creating views.
+ */
 export default class View {
   _data;
   _parentElement;
   _message;
 
+  /**
+   * Render the received object to the DOM
+   * @param {Object | Object[]} data The data to be rendered (e.g. recipe)
+   * @param {boolean} [render=true] If false, create markup string only
+   * @returns {undefined | string} A markup string is returned if render=false
+   * @this {Object} View instance
+   * @author Hao Liang
+   * @todo Finish implementation
+   */
   render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0)) {
       this.renderError();
@@ -20,6 +32,10 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  /**
+   * Update the DOM
+   * @param {Object | Object[]} data The data to be updated
+   */
   update(data) {
     this._data = data;
     const newMarkup = this._generateMarkup();
@@ -48,10 +64,16 @@ export default class View {
     });
   }
 
+  /**
+   * Clear the HTML content of the parent element
+   */
   _clear() {
     this._parentElement.innerHTML = '';
   }
 
+  /**
+   * Render a spinning loader
+   */
   renderSpinner() {
     const markup = `
   <div class="spinner">
@@ -64,6 +86,10 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  /**
+   * Render an error message
+   * @param {string} [message=this._errorMessage] The error message to display
+   */
   renderError(message = this._errorMessage) {
     const markup = `
     <div class="error">
@@ -79,6 +105,10 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  /**
+   * Render a success message
+   * @param {string} [message=this._message] The success message to display
+   */
   renderMessage(message = this._message) {
     const markup = `
     <div class="message">

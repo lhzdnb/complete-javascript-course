@@ -1,6 +1,11 @@
 import { AJAX } from './helper.js';
 import { API_URL, KEY, RES_PER_PAGE } from './config.js';
 
+/**
+ * The state object stores the current state of the application.
+ * It includes the current recipe, search results, current page of search
+ * results, and bookmarks.
+ */
 export const state = {
   recipe: {},
   search: {
@@ -12,10 +17,18 @@ export const state = {
   bookmarks: [],
 };
 
+/**
+ * Initialize the application by loading bookmarks from local storage.
+ */
 function init() {
   state.bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
 }
 
+/**
+ * Create a recipe object from the data returned by the API.
+ * @param {Object} data - The data returned by the API.
+ * @returns {Object} - The created recipe object.
+ */
 function createRecipeObject(data) {
   const { recipe } = data.data;
   return {
@@ -31,6 +44,10 @@ function createRecipeObject(data) {
   };
 }
 
+/**
+ * Load a recipe from the API.
+ * @param {string} id - The ID of the recipe to load.
+ */
 export async function loadRecipe(id) {
   try {
     const data = await AJAX(`${API_URL}/${id}`);
@@ -46,6 +63,10 @@ export async function loadRecipe(id) {
   }
 }
 
+/**
+ * Load search results from the API.
+ * @param {string} query - The search query.
+ */
 export async function loadSearchResults(query) {
   try {
     state.search.query = query;
@@ -67,6 +88,11 @@ export async function loadSearchResults(query) {
   }
 }
 
+/**
+ * Get a page of search results.
+ * @param {number} [page=state.search.page] - The page of results to return.
+ * @returns {Array} - A page of search results.
+ */
 export function getSearchResultsPage(page = state.search.page) {
   state.search.page = page;
 
@@ -75,6 +101,10 @@ export function getSearchResultsPage(page = state.search.page) {
   return state.search.results.slice(start, end);
 }
 
+/**
+ * Update the number of servings for the current recipe.
+ * @param {number} newServings - The new number of servings.
+ */
 export function updateServings(newServings) {
   state.recipe.ingredients.forEach(ing => {
     ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
@@ -82,10 +112,17 @@ export function updateServings(newServings) {
   state.recipe.servings = newServings;
 }
 
+/**
+ * Persist the current state of bookmarks to local storage.
+ */
 function persistBookmark() {
   localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
 }
 
+/**
+ * Add a recipe to bookmarks.
+ * @param {Object} recipe - The recipe to add to bookmarks.
+ */
 export function addBookmark(recipe) {
   // Add bookmark
   state.bookmarks.push(recipe);
@@ -95,6 +132,10 @@ export function addBookmark(recipe) {
   persistBookmark();
 }
 
+/**
+ * Delete a bookmark.
+ * @param {string} id - The ID of the bookmark to delete.
+ */
 export function deleteBookmark(id) {
   // delete bookmark
   const index = state.bookmarks.findIndex(bookmark => bookmark.id === id);
@@ -106,12 +147,20 @@ export function deleteBookmark(id) {
   persistBookmark();
 }
 
+// Initialize the application
 init();
 
+/**
+ * Clear all bookmarks from local storage.
+ */
 function clearBookmarks() {
   localStorage.removeItem('bookmarks');
 }
 
+/**
+ * Upload a new recipe to the API.
+ * @param {Object} newRecipe - The new recipe to upload.
+ */
 export async function uploadRecipe(newRecipe) {
   try {
     const ingredients = Object.entries(newRecipe)
