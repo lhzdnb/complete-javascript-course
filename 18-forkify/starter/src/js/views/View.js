@@ -88,7 +88,7 @@ export default class View {
         </svg>
       </div>
       <p>
-        No bookmarks yet. Find a nice recipe and bookmark it :)
+        ${message}
       </p>
     </div>
     `;
